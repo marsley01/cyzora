@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, ArrowUp } from 'lucide-react'
 
 const botResponses = {
-  'Website': "Great! We build custom, WordPress, and Wix sites. What's your budget range?",
+  'Website': "Great! We build custom full-stack web applications. What's your budget range?",
   'Shopify Store': "We can build a full Shopify store or set you up on Cyzora Store with M-Pesa built in. Which interests you?",
   'Portal': "Business portals start at KSh 150,000. What kind of portal do you need?",
   'Pricing': "Check our full pricing at cyzoratech.com/pricing or tell me your project and I'll estimate it for you.",

@@ -14,7 +14,7 @@ const services = [
 const plans = [
   { name: 'Bronze', price: '20,000', tagline: 'For new businesses going online', popular: false, features: ['5-page responsive website','Basic on-page SEO','Contact form integration','Mobile-friendly design','1 round of revisions','1 month of maintenance','Basic analytics setup','Social media integration'] },
   { name: 'Silver', price: '55,000', tagline: 'For growing brands ready to scale', popular: true, features: ['10-page responsive website','Advanced on-page SEO','Custom contact forms','Mobile-first design','3 rounds of revisions','2 months of maintenance','Advanced analytics & reporting','Basic e-commerce functionality','Content management system','Performance optimisation'] },
-  { name: 'Gold', price: '99,000', tagline: 'For established brands going all in', popular: false, features: ['Up to 20-page website','On-page and off-page SEO','Google Maps integration','5 rounds of revisions','3 months of maintenance','Complete analytics setup','Full social media integration','Custom CMS development','AI chatbot integration','Priority support'] },
+  { name: 'Gold', price: '99,000', tagline: 'For established brands going all in', popular: false, features: ['Up to 20-page website','On-page and off-page SEO','Google Maps integration','5 rounds of revisions','3 months of maintenance','Complete analytics setup',    'Full social media integration','Custom admin dashboard','AI chatbot integration','Priority support'] },
 ]
 
 const portfolio = [
@@ -289,6 +289,7 @@ export default function HomePage() {
                 <p className="text-xs font-bold uppercase tracking-widest mb-2 text-violet-300">Performance Showdown</p>
                 <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">See the Cyzora difference</h2>
                 <p className="text-sm mt-3 text-violet-200/80">Toggle between a standard page template and a Cyzora bespoke build. Every millisecond matters for your search rankings and conversion rates.</p>
+              </div>
               </div>
             </FadeUp>
             <FadeUp>
@@ -573,7 +574,7 @@ export default function HomePage() {
                   <p className="text-xs font-bold uppercase tracking-wider mb-1 text-violet-300">Step 1 of 4</p>
                   <h3 className="text-xl font-bold mb-6 text-white">What kind of site do you need?</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {['E-commerce Store', 'Portfolio / Showcase', 'Corporate Portal', 'Custom Blog / CMS'].map(opt => (
+                    {['E-commerce Store', 'Portfolio / Showcase', 'Corporate Portal', 'Custom Blog / Portal'].map(opt => (
                       <button key={opt} onClick={() => handleQSelect('siteType', opt)}
                         className="text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all"
                         style={{ background: qData.siteType === opt ? 'rgba(167, 139, 250, 0.2)' : 'rgba(255,255,255,0.05)', color: '#ffffff', border: qData.siteType === opt ? '2px solid #a78bfa' : '2px solid transparent' }}>
