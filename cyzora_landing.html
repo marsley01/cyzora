@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyzora Tech — Premium Web Design & Development Agency</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              black: 'var(--bg)',
+              card: 'var(--card)',
+              accent: 'var(--accent)',
+              gold: 'var(--gold)',
+              grayDark: 'var(--grayDark)',
+              textGray: 'var(--textGray)',
+              textLight: 'var(--textLight)',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== THEME SYSTEM (Light default, Dark via .dark class) ===== */
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --accent: #7c3aed;
+      --accent-light: #8b5cf6;
+      --accent-dark: #6d28d9;
+      --gold: #e2b342;
+      --grayDark: #f1f5f9;
+      --textGray: #64748b;
+      --textLight: #0f172a;
+      --border: rgba(0, 0, 0, 0.08);
+      --border-accent: #7c3aed;
+      --glow: rgba(124, 58, 237, 0.2);
+      --hero-overlay: rgba(248, 250, 252, 0.85);
+      --nav-bg: rgba(255, 255, 255, 0.85);
+      --whatsapp: #25d366;
+    }
+
+    .dark {
+      --bg: #0a0a0f;
+      --card: #111118;
+      --accent: #8b5cf6;
+      --accent-light: #a78bfa;
+      --accent-dark: #7c3aed;
+      --gold: #e2b342;
+      --grayDark: #161622;
+      --textGray: #8e8e93;
+      --textLight: #f5f5f7;
+      --border: rgba(255, 255, 255, 0.05);
+      --border-accent: #8b5cf6;
+      --glow: rgba(139, 92, 246, 0.15);
+      --hero-overlay: rgba(10, 10, 15, 0.4);
+      --nav-bg: rgba(10, 10, 15, 0.85);
+      --whatsapp: #25d366;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--textGray); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* Theme toggle shared styles */
+    .theme-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 6px 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--textGray);
+      transition: all 0.2s ease;
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .theme-toggle-btn .icon { width: 16px; height: 16px; }
+
+    /* Speed Showdown */
+    .speed-bar-track {
+      position: relative;
+      height: 32px;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .speed-bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .speed-handle {
+      position: absolute;
+      top: 50%;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      cursor: pointer;
+      transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Portfolio hover overlay */
+    .portfolio-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(124, 58, 237, 0.92) 0%, rgba(124, 58, 237, 0.4) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .dark .portfolio-overlay {
+      background: linear-gradient(to top, rgba(124, 58, 237, 0.92) 0%, rgba(124, 58, 237, 0.3) 100%);
+    }
+    .portfolio-card:hover .portfolio-overlay { opacity: 1; }
+
+    /* Toggle switch */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 52px; height: 28px;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #cbd5e1;
+      border-radius: 9999px;
+      transition: 0.3s;
+    }
+    .dark .toggle-slider { background: #334155; }
+    .toggle-slider::before {
+      content: "";
+      position: absolute;
+      height: 22px; width: 22px;
+      left: 3px; bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    .toggle-switch input:checked + .toggle-slider { background: var(--accent); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(24px); }
+
+    /* Questionnaire steps */
+    .q-step { display: none; }
+    .q-step.active { display: block; }
+
+    /* Accordion */
+    .faq-question { cursor: pointer; user-select: none; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 1.5rem;
+    }
+    .faq-answer.open {
+      max-height: 300px;
+      padding: 0 1.5rem 1.25rem;
+    }
+    .faq-chevron { transition: transform 0.3s ease; }
+    .faq-chevron.open { transform: rotate(180deg); }
+
+    /* Smooth section transitions */
+    section { transition: background-color 0.3s ease; }
+  </style>
+</head>
+<body class="bg-brand-black text-brand-textLight selection:bg-brand-accent selection:text-white antialiased">
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/254758335592?text=Hi%20Cyzora%20Tech,%20I'd%20like%20to%20inquire%20about%20a%20website%20design%20package."
+     target="_blank" rel="noopener noreferrer"
+     class="fixed bottom-6 right-6 z-50 bg-[var(--whatsapp)] hover:bg-[#20ba5a] text-white p-4 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group">
+    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 1.966 14.12 1.01 11.49 1.01c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.452 3.39 1.31 4.877L1.87 20.43l4.777-1.276z"/>
+    </svg>
+    <span class="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-3 transition-all duration-300 ease-out font-bold text-xs whitespace-nowrap">Chat on WhatsApp</span>
+  </a>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="sticky top-0 z-40 backdrop-blur-md transition-all duration-300" style="background: var(--nav-bg); border-bottom: 1px solid var(--border);">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-2 cursor-pointer group">
+        <svg class="w-6 h-6 transition-all duration-300" style="color: var(--accent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+        <span class="text-xl font-extrabold tracking-tight" style="color: var(--textLight);">cyzora<span style="color: var(--accent);">.</span></span>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-8 text-xs font-semibold uppercase tracking-wider" style="color: var(--textGray);">
+        <a href="#services" class="hover:underline decoration-2 underline-offset-4 transition-all" style="text-decoration-color: var(--accent);">Services</a>
+        <a href="#showdown" class="hover:underline decoration-2 underline-offset-4 transition-all" style="text-decoration-color: var(--accent);">Speed</a>
+        <a href="#portfolio" class="hover:underline decoration-2 underline-offset-4 transition-all" style="text-decoration-color: var(--accent);">Portfolio</a>
+        <a href="#pricing" class="hover:underline decoration-2 underline-offset-4 transition-all" style="text-decoration-color: var(--accent);">Pricing</a>
+        <a href="#questionnaire" class="hover:underline decoration-2 underline-offset-4 transition-all" style="text-decoration-color: var(--accent);">Book a Call</a>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+          <svg class="icon sun-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+          <svg class="icon moon-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+          <span id="themeLabel">Dark</span>
+        </button>
+        <a href="tel:0758335592" class="hidden sm:inline-flex text-xs font-semibold items-center space-x-1 transition-all" style="color: var(--textGray);">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent);">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+          <span>0758 335 592</span>
+        </a>
+        <a href="#questionnaire" class="text-white font-bold text-xs px-5 py-2.5 rounded-lg hover:brightness-110 transition-all active:scale-95 shadow-lg" style="background: var(--accent); box-shadow: 0 8px 24px var(--glow);">
+          Start Project
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <div class="relative border-b overflow-hidden min-h-[85vh] flex items-center" style="border-color: var(--border);">
+    <!-- Video Background -->
+    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="filter: brightness(0.45);">
+      <source src="/hero-bg.mp4" type="video/mp4" />
+    </video>
+    <!-- Dark overlay gradient -->
+    <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, var(--bg) 100%);"></div>
+    <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(90deg, var(--bg) 0%, transparent 30%, transparent 70%, var(--bg) 100%);"></div>
+
+    <section class="max-w-5xl mx-auto px-6 pt-24 pb-20 text-center relative z-10 w-full">
+      <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color: var(--accent);">Premium Web Development Agency</p>
+
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8" style="color: var(--textLight);">
+        We build stunning websites<br class="hidden sm:inline" />
+        <span style="color: var(--accent);">that scale your business.</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl max-w-2xl mx-auto font-normal leading-relaxed tracking-tight mb-12 drop-shadow-md" style="color: var(--textGray);">
+        From premium custom WordPress platforms to tailored web apps, we build responsive, lightning-fast digital solutions designed to drive revenue, capture leads, and enhance your digital authority across Kenya and beyond.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#questionnaire" class="w-full sm:w-auto text-white font-bold text-sm px-8 py-4 rounded-xl hover:brightness-110 transition-all flex items-center justify-center space-x-2 shadow-lg" style="background: var(--accent); box-shadow: 0 8px 32px var(--glow);">
+          <span>Start Your Project</span>
+          <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a href="https://wa.me/254758335592?text=Hi%20Cyzora%20Tech,%20I'd%20like%20to%20discuss%20a%20website%20project." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto font-bold text-sm px-8 py-4 rounded-xl transition-all flex items-center justify-center space-x-2" style="background: transparent; color: var(--textGray); border: 1px solid var(--border);">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" style="color: var(--whatsapp);"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 1.966 14.12 1.01 11.49 1.01c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.452 3.39 1.31 4.877L1.87 20.43l4.777-1.276z"/></svg>
+          <span>Chat on WhatsApp</span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== LOCAL KENYAN MARKET INTEGRATIONS ===== -->
+  <section id="integrations" class="max-w-6xl mx-auto px-6 py-24">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--accent);">Local Market Integrations</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">Built for Kenyan & East African brands</h2>
+      <p class="text-sm mt-3" style="color: var(--textGray);">We integrate the payment and communication tools your customers already use every day.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="rounded-2xl p-8 transition-all hover:scale-[1.02] duration-300" style="background: var(--card); border: 1px solid var(--border);">
+        <div class="flex items-center gap-4 mb-5">
+          <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style="background: color-mix(in srgb, var(--accent) 12%, transparent);">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: var(--accent);">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold" style="color: var(--textLight);">Automated M-Pesa Payments</h3>
+            <p class="text-xs font-semibold mt-0.5" style="color: var(--accent);">C2B &bull; Lipa Na M-Pesa &bull; STK Push</p>
+          </div>
+        </div>
+        <p class="text-sm leading-relaxed" style="color: var(--textGray);">
+          Accept automated payments directly on your e-commerce or booking site. We integrate M-Pesa APIs, Safaricom's C2B and STK Push, plus major Kenyan bank channels &mdash; so your customers can pay the way they trust.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="text-[11px] font-bold px-3 py-1.5 rounded-full" style="background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent);">M-Pesa API</span>
+          <span class="text-[11px] font-bold px-3 py-1.5 rounded-full" style="background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent);">STK Push</span>
+          <span class="text-[11px] font-bold px-3 py-1.5 rounded-full" style="background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent);">Bank Integration</span>
+        </div>
+      </div>
+
+      <div class="rounded-2xl p-8 transition-all hover:scale-[1.02] duration-300" style="background: var(--card); border: 1px solid var(--border);">
+        <div class="flex items-center gap-4 mb-5">
+          <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style="background: color-mix(in srgb, var(--accent) 12%, transparent);">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: var(--accent);">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold" style="color: var(--textLight);">SMS Notification Systems</h3>
+            <p class="text-xs font-semibold mt-0.5" style="color: var(--accent);">Africa's Talking &bull; Twilio &bull; Automated Alerts</p>
+          </div>
+        </div>
+        <p class="text-sm leading-relaxed" style="color: var(--textGray);">
+          Keep your customers informed with automated SMS alerts for order confirmations, booking reminders, dispatch updates, and payment receipts. We integrate Africa's Talking API for reliable, low-cost SMS delivery across the continent.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="text-[11px] font-bold px-3 py-1.5 rounded-full" style="background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent);">SMS Alerts</span>
+          <span class="text-[11px] font-bold px-3 py-1.5 rounded-full" style="background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent);">Africa's Talking</span>
+          <span class="text-[11px] font-bold px-3 py-1.5 rounded-full" style="background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent);">Auto Notifications</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" style="border-top: 1px solid var(--border);">
+    <div class="max-w-6xl mx-auto px-6 py-24">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--accent);">Our Core Capabilities</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">Engineered for speed, built for results.</h2>
+        <p class="text-sm mt-3" style="color: var(--textGray);">We focus on cutting-edge design, rock-solid security, and optimized lead-capture systems to help your business outpace your competitors.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="rounded-2xl p-8 transition-all hover:-translate-y-1 duration-300" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-6" style="background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent);">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1V5z M4 9h16 M8 14h2 M14 14h2" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold mb-3" style="color: var(--textLight);">Bespoke Custom Web Design</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--textGray);">Stunning, customized visuals designed around your brand guidelines. Fully mobile-responsive layouts tailored to lock in immediate customer trust.</p>
+        </div>
+
+        <div class="rounded-2xl p-8 transition-all hover:-translate-y-1 duration-300" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-6" style="background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent);">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold mb-3" style="color: var(--textLight);">Premium WordPress Solutions</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--textGray);">Expert-tier, lightweight WordPress architectures optimized for lightning-fast speeds. Includes custom block editors and intuitive content portals for simple editing.</p>
+        </div>
+
+        <div class="rounded-2xl p-8 transition-all hover:-translate-y-1 duration-300" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-6" style="background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent);">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold mb-3" style="color: var(--textLight);">SEO & Conversion Optimization</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--textGray);">Structured clean metadata and optimized schema implementations. We make sure your web pages load instantly and sit high on search engine rankings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WORDPRESS SPEED SHOWDOWN ===== -->
+  <section id="showdown" style="border-top: 1px solid var(--border);">
+    <div class="max-w-4xl mx-auto px-6 py-24">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--accent);">WordPress Speed Showdown</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">See the Cyzora difference</h2>
+        <p class="text-sm mt-3" style="color: var(--textGray);">Toggle between a standard WordPress site and a Cyzora-optimized build. Every millisecond matters for your rankings and revenue.</p>
+      </div>
+
+      <div class="rounded-3xl p-8 sm:p-10" style="background: var(--card); border: 1px solid var(--border);">
+        <!-- Toggle -->
+        <div class="flex items-center justify-center gap-4 mb-10">
+          <span id="standardLabel" class="text-sm font-bold transition-opacity" style="color: var(--textGray);">Standard Site</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="speedToggle" onchange="toggleSpeed()">
+            <span class="toggle-slider"></span>
+          </label>
+          <span id="cyzoraLabel" class="text-sm font-bold" style="color: var(--accent);">Cyzora-Optimized</span>
+        </div>
+
+        <!-- Comparison cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+          <div class="rounded-2xl p-6 text-center" style="background: color-mix(in srgb, var(--bg) 50%, transparent); border: 1px solid var(--border);" id="speedCardA">
+            <p class="text-xs font-bold uppercase tracking-wider mb-1" style="color: var(--textGray);">Load Time</p>
+            <p class="text-4xl sm:text-5xl font-black transition-all duration-500" id="loadTimeDisplay" style="color: var(--textLight);">4.5<span class="text-lg font-medium" style="color: var(--textGray);">s</span></p>
+          </div>
+          <div class="rounded-2xl p-6 text-center" style="background: color-mix(in srgb, var(--bg) 50%, transparent); border: 1px solid var(--border);" id="speedCardB">
+            <p class="text-xs font-bold uppercase tracking-wider mb-1" style="color: var(--textGray);">Performance Score</p>
+            <p class="text-4xl sm:text-5xl font-black transition-all duration-500" id="scoreDisplay" style="color: var(--textGray);">45<span class="text-lg font-medium">%</span></p>
+          </div>
+        </div>
+
+        <!-- Visual speed bars -->
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1.5" style="color: var(--textGray);">
+              <span>First Contentful Paint</span>
+              <span id="fcpLabel">2.8s</span>
+            </div>
+            <div class="speed-bar-track" style="background: color-mix(in srgb, var(--bg) 60%, transparent);">
+              <div class="speed-bar-fill" id="fcpBar" style="width: 62%; background: var(--textGray);"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1.5" style="color: var(--textGray);">
+              <span>Time to Interactive</span>
+              <span id="ttiLabel">3.8s</span>
+            </div>
+            <div class="speed-bar-track" style="background: color-mix(in srgb, var(--bg) 60%, transparent);">
+              <div class="speed-bar-fill" id="ttiBar" style="width: 32%; background: var(--textGray);"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1.5" style="color: var(--textGray);">
+              <span>Cumulative Layout Shift</span>
+              <span id="clsLabel">0.35</span>
+            </div>
+            <div class="speed-bar-track" style="background: color-mix(in srgb, var(--bg) 60%, transparent);">
+              <div class="speed-bar-fill" id="clsBar" style="width: 45%; background: var(--textGray);"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 text-center">
+          <p class="text-xs leading-relaxed" style="color: var(--textGray);">
+            <span id="showdownStatus">Standard WordPress sites suffer from plugin bloat and unoptimized queries.</span><br>
+            <span class="font-bold" style="color: var(--accent);">Every Cyzora WordPress build scores 95+ on Lighthouse, guaranteed.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PORTFOLIO & MOCKUP GRID ===== -->
+  <section id="portfolio" style="border-top: 1px solid var(--border);">
+    <div class="max-w-6xl mx-auto px-6 py-24">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--accent);">Our Work</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">Projects we're proud of</h2>
+        <p class="text-sm mt-3" style="color: var(--textGray);">Every site we ship is built for speed, scalability, and a world-class user experience.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Project 1 -->
+        <div class="portfolio-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="aspect-[4/3] flex items-center justify-center" style="background: linear-gradient(135deg, #7c3aed20, #6d28d940);">
+            <svg class="w-16 h-16" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" style="color: var(--accent); opacity: 0.4;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <h4 class="text-white text-lg font-bold">Trivo Kenya</h4>
+            <p class="text-white/80 text-xs mb-2">Modern e-commerce portal for smartphone accessories</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Custom WordPress</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">WooCommerce</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">M-Pesa IPN</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="portfolio-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="aspect-[4/3] flex items-center justify-center" style="background: linear-gradient(135deg, #7c3aed20, #8b5cf640);">
+            <svg class="w-16 h-16" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" style="color: var(--accent); opacity: 0.4;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <h4 class="text-white text-lg font-bold">PrimeCart Logistics</h4>
+            <p class="text-white/80 text-xs mb-2">Corporate portal with real-time shipment tracking</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">React</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Tailwind CSS</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Node.js API</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="portfolio-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="aspect-[4/3] flex items-center justify-center" style="background: linear-gradient(135deg, #6d28d930, #7c3aed50);">
+            <svg class="w-16 h-16" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" style="color: var(--accent); opacity: 0.4;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <h4 class="text-white text-lg font-bold">Belloria Beauty</h4>
+            <p class="text-white/80 text-xs mb-2">E-commerce store for premium beauty products</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">WordPress</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">WooCommerce</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">M-Pesa</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="portfolio-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="aspect-[4/3] flex items-center justify-center" style="background: linear-gradient(135deg, #8b5cf620, #7c3aed40);">
+            <svg class="w-16 h-16" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" style="color: var(--accent); opacity: 0.4;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <h4 class="text-white text-lg font-bold">Munchify</h4>
+            <p class="text-white/80 text-xs mb-2">Food discovery & ordering platform</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Next.js</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Tailwind CSS</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">M-Pesa API</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="portfolio-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="aspect-[4/3] flex items-center justify-center" style="background: linear-gradient(135deg, #7c3aed15, #6d28d945);">
+            <svg class="w-16 h-16" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" style="color: var(--accent); opacity: 0.4;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <h4 class="text-white text-lg font-bold">Edyfra Learning</h4>
+            <p class="text-white/80 text-xs mb-2">Social learning platform with interactive courses</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">React</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Firebase</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Tailwind CSS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="portfolio-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-1" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="aspect-[4/3] flex items-center justify-center" style="background: linear-gradient(135deg, #a78bfa20, #7c3aed50);">
+            <svg class="w-16 h-16" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" style="color: var(--accent); opacity: 0.4;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <div class="portfolio-overlay">
+            <h4 class="text-white text-lg font-bold">Client Portal</h4>
+            <p class="text-white/80 text-xs mb-2">Secure client dashboard with support ticketing</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Next.js</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Supabase</span>
+              <span class="text-[10px] font-bold text-white px-2 py-1 rounded-md" style="background: rgba(255,255,255,0.15);">Tailwind CSS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR PROCESS ===== -->
+  <section id="process" style="border-top: 1px solid var(--border);">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--accent);">Our Blueprint</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">How We Launch Your Website</h2>
+        <p class="text-sm mt-3" style="color: var(--textGray);">We have optimized our delivery pipeline to be highly efficient, collaborative, and entirely transparent.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="rounded-3xl p-8 relative overflow-hidden transition-all hover:-translate-y-1 duration-300" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="absolute top-4 right-6 text-6xl font-extrabold" style="color: color-mix(in srgb, var(--accent) 6%, transparent);">01</div>
+          <h4 class="text-lg font-bold mb-3" style="color: var(--textLight);">1. Strategy & Discovery</h4>
+          <p class="text-xs leading-relaxed" style="color: var(--textGray);">We begin with a thorough Zoom or traditional phone call to map out your core feature set, design guidelines, reference sites, and target audience needs.</p>
+        </div>
+        <div class="rounded-3xl p-8 relative overflow-hidden transition-all hover:-translate-y-1 duration-300" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="absolute top-4 right-6 text-6xl font-extrabold" style="color: color-mix(in srgb, var(--accent) 6%, transparent);">02</div>
+          <h4 class="text-lg font-bold mb-3" style="color: var(--textLight);">2. Engineering & Design</h4>
+          <p class="text-xs leading-relaxed" style="color: var(--textGray);">Our team codes responsive custom components and integrates blazing-fast databases, working closely within your chosen tier parameters for a pixel-perfect layout.</p>
+        </div>
+        <div class="rounded-3xl p-8 relative overflow-hidden transition-all hover:-translate-y-1 duration-300" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="absolute top-4 right-6 text-6xl font-extrabold" style="color: color-mix(in srgb, var(--accent) 6%, transparent);">03</div>
+          <h4 class="text-lg font-bold mb-3" style="color: var(--textLight);">3. QA, Optimize & Launch</h4>
+          <p class="text-xs leading-relaxed" style="color: var(--textGray);">We perform complete cross-device testing, configure comprehensive SEO patterns, run detailed page-speed diagnostics, and hand over your active login credentials.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRICING ===== -->
+  <section id="pricing" style="border-top: 1px solid var(--border);">
+    <div class="max-w-6xl mx-auto px-6 py-20">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--accent);">Flexible Packages</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">Transparent pricing structures</h2>
+        <p class="text-sm mt-3" style="color: var(--textGray);">Choose the perfect package to launch or scale your brand's digital presence.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+
+        <!-- Bronze -->
+        <div class="rounded-3xl p-8 flex flex-col justify-between transition-all" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-2xl font-bold" style="color: var(--textLight);">Bronze</h3>
+              <p class="text-xs mt-1" style="color: var(--textGray);">For new businesses going online</p>
+            </div>
+            <div style="border-bottom: 1px solid var(--border); padding-bottom: 1.5rem;">
+              <div class="flex items-baseline space-x-2">
+                <span class="text-sm font-semibold" style="color: var(--textGray);">KES</span>
+                <span class="text-4xl sm:text-5xl font-extrabold tracking-tight" style="color: var(--textLight);">20,000</span>
+              </div>
+              <p class="text-xs mt-2" style="color: var(--textGray);">one-time project fee</p>
+            </div>
+            <ul class="space-y-4 text-xs" style="color: var(--textLight);">
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>5-page responsive website</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Basic on-page SEO</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Contact form integration</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Mobile-friendly design</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>1 round of revisions</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>1 month of maintenance</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Basic analytics setup</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Social media integration</span></li>
+            </ul>
+          </div>
+          <div class="pt-8">
+            <a href="#questionnaire" onclick="selectPlan('Bronze')" class="block w-full text-center font-semibold text-sm py-3.5 px-4 rounded-xl transition-all" style="background: var(--grayDark); color: var(--textLight); border: 1px solid var(--border);">Choose Bronze</a>
+          </div>
+        </div>
+
+        <!-- Silver (Popular) -->
+        <div class="rounded-3xl p-8 flex flex-col justify-between transition-all relative" style="background: var(--card); border: 2px solid var(--gold); box-shadow: 0 20px 60px color-mix(in srgb, var(--gold) 8%, transparent);">
+          <div class="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 text-black text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full" style="background: var(--gold);">Most Popular</div>
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-2xl font-bold" style="color: var(--textLight);">Silver</h3>
+              <p class="text-xs mt-1" style="color: var(--gold);">For growing brands ready to scale</p>
+            </div>
+            <div style="border-bottom: 1px solid var(--border); padding-bottom: 1.5rem;">
+              <div class="flex items-baseline space-x-2">
+                <span class="text-sm font-semibold" style="color: var(--textGray);">KES</span>
+                <span class="text-4xl sm:text-5xl font-extrabold tracking-tight" style="color: var(--gold);">55,000</span>
+              </div>
+              <p class="text-xs mt-2" style="color: var(--textGray);">one-time project fee</p>
+            </div>
+            <ul class="space-y-4 text-xs" style="color: var(--textLight);">
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>10-page responsive website</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Advanced on-page SEO</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Custom contact forms</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Mobile-first design</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>3 rounds of revisions</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>2 months of maintenance</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Advanced analytics & reporting</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Basic e-commerce functionality</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Content management system</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Performance optimisation</span></li>
+            </ul>
+          </div>
+          <div class="pt-8">
+            <a href="#questionnaire" onclick="selectPlan('Silver')" class="block w-full text-center font-extrabold text-sm py-3.5 px-4 rounded-xl transition-all" style="background: var(--gold); color: #000; box-shadow: 0 8px 24px color-mix(in srgb, var(--gold) 20%, transparent);">Choose Silver</a>
+          </div>
+        </div>
+
+        <!-- Gold -->
+        <div class="rounded-3xl p-8 flex flex-col justify-between transition-all" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-2xl font-bold" style="color: var(--textLight);">Gold</h3>
+              <p class="text-xs mt-1" style="color: var(--textGray);">For established brands going all in</p>
+            </div>
+            <div style="border-bottom: 1px solid var(--border); padding-bottom: 1.5rem;">
+              <div class="flex items-baseline space-x-2">
+                <span class="text-sm font-semibold" style="color: var(--textGray);">KES</span>
+                <span class="text-4xl sm:text-5xl font-extrabold tracking-tight" style="color: var(--textLight);">99,000</span>
+              </div>
+              <p class="text-xs mt-2" style="color: var(--textGray);">one-time project fee</p>
+            </div>
+            <ul class="space-y-4 text-xs" style="color: var(--textLight);">
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Up to 20-page website</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>On-page and off-page SEO</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Google Maps integration</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>5 rounds of revisions</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>3 months of maintenance</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Complete analytics setup</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Full social media integration</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Custom CMS development</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>AI chatbot integration</span></li>
+              <li class="flex items-start space-x-3"><svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--gold);"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Priority support</span></li>
+            </ul>
+          </div>
+          <div class="pt-8">
+            <a href="#questionnaire" onclick="selectPlan('Gold')" class="block w-full text-center font-semibold text-sm py-3.5 px-4 rounded-xl transition-all" style="background: var(--grayDark); color: var(--textLight); border: 1px solid var(--border);">Choose Gold</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECT SCOPE QUESTIONNAIRE (4-Step Wizard) ===== -->
+  <section id="questionnaire" style="border-top: 1px solid var(--border);">
+    <div class="max-w-3xl mx-auto px-6 py-24">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--accent);">Project Scope Questionnaire</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">Tell us about your project</h2>
+        <p class="text-sm mt-3" style="color: var(--textGray);">Answer 4 quick questions and we'll prepare a tailored proposal before our call.</p>
+      </div>
+
+      <div class="rounded-3xl p-6 sm:p-10 relative shadow-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 20px 60px var(--glow);">
+
+        <!-- Step indicators -->
+        <div class="flex items-center justify-center gap-2 mb-10">
+          <div class="step-dot active" data-step="1" style="width: 10px; height: 10px; border-radius: 50%; background: var(--accent); transition: all 0.3s;"></div>
+          <div class="step-line" style="width: 40px; height: 2px; background: var(--border); border-radius: 2px;"></div>
+          <div class="step-dot" data-step="2" style="width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: all 0.3s;"></div>
+          <div class="step-line" style="width: 40px; height: 2px; background: var(--border); border-radius: 2px;"></div>
+          <div class="step-dot" data-step="3" style="width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: all 0.3s;"></div>
+          <div class="step-line" style="width: 40px; height: 2px; background: var(--border); border-radius: 2px;"></div>
+          <div class="step-dot" data-step="4" style="width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: all 0.3s;"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="q-step active" data-step="1">
+          <p class="text-xs font-bold uppercase tracking-wider mb-1" style="color: var(--accent);">Step 1 of 4</p>
+          <h3 class="text-xl font-bold mb-6" style="color: var(--textLight);">What kind of site do you need?</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button onclick="selectQOption('siteType', this)" data-value="E-commerce" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">E-commerce Store</button>
+            <button onclick="selectQOption('siteType', this)" data-value="Portfolio" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">Portfolio / Showcase</button>
+            <button onclick="selectQOption('siteType', this)" data-value="Corporate Portal" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">Corporate Portal</button>
+            <button onclick="selectQOption('siteType', this)" data-value="Custom Blog" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">Custom Blog / CMS</button>
+          </div>
+          <div class="mt-8 text-right">
+            <button onclick="nextStep(2)" class="text-white font-bold text-sm px-6 py-3 rounded-xl hover:brightness-110 transition-all" style="background: var(--accent);" disabled id="qNext1">Next Step</button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="q-step" data-step="2">
+          <p class="text-xs font-bold uppercase tracking-wider mb-1" style="color: var(--accent);">Step 2 of 4</p>
+          <h3 class="text-xl font-bold mb-6" style="color: var(--textLight);">Do you need custom payment gateways?</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <button onclick="selectQOption('payment', this)" data-value="M-Pesa & Card" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">Yes, M-Pesa & Card</button>
+            <button onclick="selectQOption('payment', this)" data-value="Just Card" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">Just Card Payments</button>
+            <button onclick="selectQOption('payment', this)" data-value="None" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">No Payment Gateways</button>
+          </div>
+          <div class="mt-8 flex justify-between">
+            <button onclick="prevStep(1)" class="text-sm font-semibold px-6 py-3 rounded-xl transition-all" style="color: var(--textGray); background: var(--grayDark);">Back</button>
+            <button onclick="nextStep(3)" class="text-white font-bold text-sm px-6 py-3 rounded-xl hover:brightness-110 transition-all" style="background: var(--accent);" disabled id="qNext2">Next Step</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="q-step" data-step="3">
+          <p class="text-xs font-bold uppercase tracking-wider mb-1" style="color: var(--accent);">Step 3 of 4</p>
+          <h3 class="text-xl font-bold mb-6" style="color: var(--textLight);">Do you have your content and logos ready?</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button onclick="selectQOption('content', this)" data-value="Ready" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">Yes, all ready to go</button>
+            <button onclick="selectQOption('content', this)" data-value="Need Copywriting" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">Need copywriting help</button>
+          </div>
+          <div class="mt-8 flex justify-between">
+            <button onclick="prevStep(2)" class="text-sm font-semibold px-6 py-3 rounded-xl transition-all" style="color: var(--textGray); background: var(--grayDark);">Back</button>
+            <button onclick="nextStep(4)" class="text-white font-bold text-sm px-6 py-3 rounded-xl hover:brightness-110 transition-all" style="background: var(--accent);" disabled id="qNext3">Next Step</button>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="q-step" data-step="4">
+          <p class="text-xs font-bold uppercase tracking-wider mb-1" style="color: var(--accent);">Step 4 of 4</p>
+          <h3 class="text-xl font-bold mb-6" style="color: var(--textLight);">What is your desired launch timeline?</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <button onclick="selectQOption('timeline', this)" data-value="Within 2 weeks" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">Within 2 weeks</button>
+            <button onclick="selectQOption('timeline', this)" data-value="1 month" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">1 month</button>
+            <button onclick="selectQOption('timeline', this)" data-value="Flexible" class="q-option text-left px-5 py-4 rounded-xl text-sm font-semibold transition-all" style="background: var(--grayDark); color: var(--textLight); border: 2px solid transparent;">Flexible / No rush</button>
+          </div>
+          <div class="mt-8 flex justify-between">
+            <button onclick="prevStep(3)" class="text-sm font-semibold px-6 py-3 rounded-xl transition-all" style="color: var(--textGray); background: var(--grayDark);">Back</button>
+            <button onclick="submitQuestionnaire()" class="text-white font-bold text-sm px-6 py-3 rounded-xl hover:brightness-110 transition-all" style="background: var(--accent);" disabled id="qNext4">Get My Proposal</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Success -->
+        <div class="q-step" data-step="5">
+          <div class="py-8 text-center flex flex-col items-center space-y-5">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: color-mix(in srgb, var(--accent) 12%, transparent);">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent);">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-black" style="color: var(--textLight);">Your proposal is being prepared!</h3>
+            <p class="text-sm max-w-md mx-auto leading-relaxed" style="color: var(--textGray);" id="qSummary">
+              We'll review your details and reach out within 24 hours with a custom proposal tailored to your project.
+            </p>
+            <div class="flex flex-wrap gap-3 justify-center pt-2">
+              <a href="https://wa.me/254758335592?text=Hi%20Cyzora,%20I%20just%20submitted%20my%20project%20scope." target="_blank" rel="noopener noreferrer" class="text-white font-bold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition-all" style="background: var(--whatsapp);">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 1.966 14.12 1.01 11.49 1.01c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.452 3.39 1.31 4.877L1.87 20.43l4.777-1.276z"/></svg>
+                <span>Chat on WhatsApp</span>
+              </a>
+              <button onclick="resetQuestionnaire()" class="text-sm font-semibold px-5 py-3 rounded-xl transition-all" style="color: var(--textGray); background: var(--grayDark);">Start Over</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ACCORDION ===== -->
+  <section id="faq" style="border-top: 1px solid var(--border);">
+    <div class="max-w-3xl mx-auto px-6 py-20">
+      <div class="text-center max-w-xl mx-auto mb-14">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--accent);">Frequently Asked Questions</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">Got questions? We've got answers.</h2>
+      </div>
+
+      <div class="space-y-3" id="faqContainer">
+        <div class="faq-item rounded-2xl overflow-hidden transition-all" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="faq-question flex items-center justify-between px-5 py-5" onclick="toggleFaq(this)">
+            <span class="text-sm font-bold" style="color: var(--textLight);">Do I have to buy my own hosting and domain?</span>
+            <svg class="faq-chevron w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--textGray);"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="faq-answer text-sm leading-relaxed" style="color: var(--textGray);">
+            We recommend and can arrange premium hosting tailored to your site's needs. For the Bronze plan, you can use your own hosting. Our Silver and Gold plans include optimized hosting setup with CDN and daily backups.
+          </div>
+        </div>
+
+        <div class="faq-item rounded-2xl overflow-hidden transition-all" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="faq-question flex items-center justify-between px-5 py-5" onclick="toggleFaq(this)">
+            <span class="text-sm font-bold" style="color: var(--textLight);">Can I easily edit my own text and images later?</span>
+            <svg class="faq-chevron w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--textGray);"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="faq-answer text-sm leading-relaxed" style="color: var(--textGray);">
+            Absolutely. We build your site on a custom, user-friendly WordPress dashboard with an intuitive block editor &mdash; so you can update text, images, and even add new pages without touching a line of code. We also provide a quick walkthrough video after launch.
+          </div>
+        </div>
+
+        <div class="faq-item rounded-2xl overflow-hidden transition-all" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="faq-question flex items-center justify-between px-5 py-5" onclick="toggleFaq(this)">
+            <span class="text-sm font-bold" style="color: var(--textLight);">How do revisions work?</span>
+            <svg class="faq-chevron w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--textGray);"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="faq-answer text-sm leading-relaxed" style="color: var(--textGray);">
+            Each package includes a set number of revision rounds (1 for Bronze, 3 for Silver, 5 for Gold). You submit feedback via our simple request form, and we implement changes within 2&ndash;3 business days. Additional revision rounds can be purchased separately.
+          </div>
+        </div>
+
+        <div class="faq-item rounded-2xl overflow-hidden transition-all" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="faq-question flex items-center justify-between px-5 py-5" onclick="toggleFaq(this)">
+            <span class="text-sm font-bold" style="color: var(--textLight);">Is there ongoing support after launch?</span>
+            <svg class="faq-chevron w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--textGray);"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="faq-answer text-sm leading-relaxed" style="color: var(--textGray);">
+            Yes! All plans include a maintenance period (1&ndash;3 months depending on the plan). After that, you can subscribe to our affordable monthly maintenance packages which include security updates, weekly backups, uptime monitoring, and priority email support.
+          </div>
+        </div>
+
+        <div class="faq-item rounded-2xl overflow-hidden transition-all" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="faq-question flex items-center justify-between px-5 py-5" onclick="toggleFaq(this)">
+            <span class="text-sm font-bold" style="color: var(--textLight);">What if I need M-Pesa integration on my site?</span>
+            <svg class="faq-chevron w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--textGray);"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="faq-answer text-sm leading-relaxed" style="color: var(--textGray);">
+            It's one of our specialities. We integrate M-Pesa C2B, Lipa Na M-Pesa, and STK Push directly into your WooCommerce store or custom web application. We also support integrations with major Kenyan banks for a seamless local payment experience.
+          </div>
+        </div>
+
+        <div class="faq-item rounded-2xl overflow-hidden transition-all" style="background: var(--card); border: 1px solid var(--border);">
+          <div class="faq-question flex items-center justify-between px-5 py-5" onclick="toggleFaq(this)">
+            <span class="text-sm font-bold" style="color: var(--textLight);">How fast will my WordPress site load?</span>
+            <svg class="faq-chevron w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--textGray);"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="faq-answer text-sm leading-relaxed" style="color: var(--textGray);">
+            Every Cyzora WordPress site scores 95+ on Google Lighthouse with sub-second load times. We use lightweight themes, optimized databases, image compression, CDN integration, and advanced caching to ensure your site is among the fastest in your niche.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT / FOUNDERS ===== -->
+  <section id="why-cyzora" style="border-top: 1px solid var(--border);">
+    <div class="max-w-5xl mx-auto px-6 py-10 pb-24">
+      <div class="rounded-[32px] p-8 sm:p-14 relative overflow-hidden text-center" style="background: color-mix(in srgb, var(--grayDark) 60%, transparent); border: 1px solid var(--border);">
+        <div class="relative z-10 max-w-3xl mx-auto space-y-6">
+          <span class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">Behind the Code</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">Our Core Philosophy</h2>
+          <p class="text-sm max-w-xl mx-auto leading-relaxed" style="color: var(--textGray);">
+            Cyzora was founded and crafted by <strong style="color: var(--textLight);">Marsley Mash</strong> and <strong style="color: var(--textLight);">Emmanuel Charles</strong>. With years of experience pushing the boundaries of custom WordPress performance, responsive layouts, and automated systems, we build premium digital frameworks designed to grow alongside your brand.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4 pt-4 text-xs font-medium">
+            <span class="px-4 py-2.5 rounded-full" style="background: color-mix(in srgb, var(--card) 50%, transparent); color: var(--textGray); border: 1px solid var(--border);">Marsley Mash &mdash; Lead Architect</span>
+            <span class="px-4 py-2.5 rounded-full" style="background: color-mix(in srgb, var(--card) 50%, transparent); color: var(--textGray); border: 1px solid var(--border);">Emmanuel Charles &mdash; Core Engineer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BOOKING SCHEDULER (kept alongside questionnaire) ===== -->
+  <section id="booking" style="border-top: 1px solid var(--border);">
+    <div class="max-w-4xl mx-auto px-6 py-24 relative">
+      <div style="position: absolute; top: 50%; left: 0; width: 300px; height: 300px; border-radius: 50%; filter: blur(90px); pointer-events: none; background: var(--glow);"></div>
+
+      <div class="text-center max-w-xl mx-auto mb-16">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2" style="color: var(--accent);">Schedule A Strategy Consultation</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight" style="color: var(--textLight);">Let's finalize your project</h2>
+        <p class="text-sm mt-3" style="color: var(--textGray);">Book a 15-minute Zoom call or traditional phone call to confirm your scope and timeline.</p>
+      </div>
+
+      <div id="bookingWidget" class="rounded-3xl p-6 sm:p-10 relative shadow-2xl overflow-hidden" style="background: var(--card); border: 1px solid var(--border); box-shadow: 0 20px 60px var(--glow);">
+
+        <div id="bookingForm">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <div class="md:col-span-6 space-y-6">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider mb-3" style="color: var(--textGray);">1. Select Call Format</label>
+                <div class="grid grid-cols-2 gap-3">
+                  <button type="button" onclick="setCallType('zoom')" id="btnZoom" class="py-4 px-3 rounded-xl flex flex-col items-center justify-center gap-2 transition-all" style="border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--textLight);">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent);"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    <span class="text-xs font-bold">Zoom Meeting</span>
+                  </button>
+                  <button type="button" onclick="setCallType('phone')" id="btnPhone" class="py-4 px-3 rounded-xl flex flex-col items-center justify-center gap-2 transition-all" style="background: transparent; border: 1px solid var(--border); color: var(--textGray);">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <span class="text-xs font-bold">Direct Phone Call</span>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider mb-2" style="color: var(--textGray);">2. Desired Package</label>
+                <select id="bookingPackage" class="w-full rounded-xl px-4 py-3 text-sm focus:outline-none" style="background: var(--grayDark); color: var(--textLight); border: 1px solid var(--border);">
+                  <option value="Bronze">Bronze Package (KES 20,000)</option>
+                  <option value="Silver" selected>Silver Package (KES 55,000)</option>
+                  <option value="Gold">Gold Package (KES 99,000)</option>
+                </select>
+              </div>
+
+              <div class="space-y-3">
+                <label class="block text-xs font-bold uppercase tracking-wider" style="color: var(--textGray);">3. Your Information</label>
+                <input type="text" id="clientName" placeholder="Full name" class="w-full rounded-xl px-4 py-3 text-sm focus:outline-none" style="background: var(--grayDark); color: var(--textLight); border: 1px solid var(--border);">
+                <input type="email" id="clientEmail" placeholder="Email address" class="w-full rounded-xl px-4 py-3 text-sm focus:outline-none" style="background: var(--grayDark); color: var(--textLight); border: 1px solid var(--border);">
+              </div>
+            </div>
+
+            <div class="md:col-span-6 space-y-6">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider mb-3" style="color: var(--textGray);">4. Choose Date</label>
+                <div class="grid grid-cols-4 gap-2 text-center" id="dateGrid">
+                  <button type="button" onclick="selectDate(0)" id="date0" class="py-3.5 rounded-xl text-xs transition-all" style="border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--textLight);">
+                    <span class="block text-[9px] uppercase font-black" style="color: var(--accent);">Mon</span>
+                    <span class="font-extrabold text-sm">Jun 15</span>
+                  </button>
+                  <button type="button" onclick="selectDate(1)" id="date1" class="py-3.5 rounded-xl text-xs transition-all" style="background: transparent; border: 1px solid var(--border); color: var(--textGray);">
+                    <span class="block text-[9px] uppercase font-bold">Tue</span>
+                    <span class="font-bold text-sm">Jun 16</span>
+                  </button>
+                  <button type="button" onclick="selectDate(2)" id="date2" class="py-3.5 rounded-xl text-xs transition-all" style="background: transparent; border: 1px solid var(--border); color: var(--textGray);">
+                    <span class="block text-[9px] uppercase font-bold">Wed</span>
+                    <span class="font-bold text-sm">Jun 17</span>
+                  </button>
+                  <button type="button" onclick="selectDate(3)" id="date3" class="py-3.5 rounded-xl text-xs transition-all" style="background: transparent; border: 1px solid var(--border); color: var(--textGray);">
+                    <span class="block text-[9px] uppercase font-bold">Thu</span>
+                    <span class="font-bold text-sm">Jun 18</span>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider mb-3" style="color: var(--textGray);">5. Select Available Time</label>
+                <div class="grid grid-cols-2 gap-2 text-center" id="timeGrid">
+                  <button type="button" onclick="selectTime(0)" id="time0" class="py-3 rounded-xl text-xs font-semibold transition-all" style="border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--textLight);">09:00 AM EAT</button>
+                  <button type="button" onclick="selectTime(1)" id="time1" class="py-3 rounded-xl text-xs font-semibold transition-all" style="background: transparent; border: 1px solid var(--border); color: var(--textGray);">11:30 AM EAT</button>
+                  <button type="button" onclick="selectTime(2)" id="time2" class="py-3 rounded-xl text-xs font-semibold transition-all" style="background: transparent; border: 1px solid var(--border); color: var(--textGray);">02:00 PM EAT</button>
+                  <button type="button" onclick="selectTime(3)" id="time3" class="py-3 rounded-xl text-xs font-semibold transition-all" style="background: transparent; border: 1px solid var(--border); color: var(--textGray);">04:30 PM EAT</button>
+                </div>
+              </div>
+
+              <button type="button" onclick="confirmBooking()" class="w-full text-white font-extrabold text-sm py-4 rounded-xl transition-all hover:brightness-110" style="background: var(--accent); box-shadow: 0 8px 24px var(--glow);">
+                Confirm Consultation Call
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Booking Success -->
+        <div id="bookingSuccess" class="hidden py-6 text-center flex flex-col items-center justify-center space-y-4">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center" style="background: color-mix(in srgb, var(--accent) 12%, transparent);">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color: var(--accent);"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-2xl font-black" style="color: var(--textLight);">Call Confirmed!</h3>
+          <p class="text-sm max-w-md mx-auto leading-relaxed" style="color: var(--textGray);" id="successMessage">Your meeting has been booked.</p>
+          <div style="background: color-mix(in srgb, var(--bg) 50%, transparent); border: 1px solid var(--border);" class="p-5 rounded-2xl max-w-lg w-full space-y-4">
+            <p class="text-xs font-bold uppercase tracking-wider text-center" style="color: var(--textGray);">Need to speak with us right now?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <a href="tel:0758335592" class="text-white font-bold text-xs py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all" style="background: var(--accent);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                <span>Call: 0758335592</span>
+              </a>
+              <a href="tel:0740610772" class="font-bold text-xs py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all" style="color: var(--textGray); border: 1px solid var(--border);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                <span>Backup: 0740610772</span>
+              </a>
+            </div>
+            <a href="https://wa.me/254758335592?text=Hi%20Cyzora%20Tech,%20I%20just%20scheduled%20a%20consultation." target="_blank" rel="noopener noreferrer" class="w-full text-white font-bold text-xs py-3 px-4 rounded-xl flex items-center justify-center space-x-2 transition-all" style="background: var(--whatsapp);">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 1.966 14.12 1.01 11.49 1.01c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.452 3.39 1.31 4.877L1.87 20.43l4.777-1.276z"/></svg>
+              <span>WhatsApp Us</span>
+            </a>
+          </div>
+          <button type="button" onclick="resetBooking()" class="text-sm font-semibold px-6 py-2.5 rounded-xl transition-all" style="color: var(--textGray); background: var(--grayDark);">Schedule Another Call</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="border-top: 1px solid var(--border); background: var(--bg);">
+    <div class="max-w-6xl mx-auto px-6 py-14">
+      <div class="flex flex-col md:flex-row items-center justify-between text-xs gap-6" style="color: var(--textGray);">
+        <div class="flex items-center space-x-2">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--accent);">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
+          <span class="text-base font-extrabold tracking-tight" style="color: var(--textLight);">cyzora<span style="color: var(--accent);">.</span></span>
+        </div>
+        <div class="flex space-x-8">
+          <a href="#services" class="hover:underline transition-all" style="text-decoration-color: var(--accent);">Services</a>
+          <a href="#portfolio" class="hover:underline transition-all" style="text-decoration-color: var(--accent);">Portfolio</a>
+          <a href="#pricing" class="hover:underline transition-all" style="text-decoration-color: var(--accent);">Pricing</a>
+          <a href="#questionnaire" class="hover:underline transition-all" style="text-decoration-color: var(--accent);">Start Project</a>
+          <a href="tel:0758335592" class="hover:underline transition-all" style="text-decoration-color: var(--accent);">0758335592</a>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-between text-[11px] mt-8 pt-8" style="color: var(--textGray); border-top: 1px solid var(--border);">
+        <p>&copy; 2026 Cyzora Tech. Premium digital solutions for East African brands.</p>
+        <div class="flex space-x-6 mt-4 sm:mt-0">
+          <a href="#" class="hover:underline transition-all" style="text-decoration-color: var(--accent);">Privacy Policy</a>
+          <a href="#" class="hover:underline transition-all" style="text-decoration-color: var(--accent);">Terms &amp; Guidelines</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // ========== THEME ==========
+    (function initTheme() {
+      const saved = localStorage.getItem('cyzora-theme');
+      if (saved === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      localStorage.setItem('cyzora-theme', isDark ? 'dark' : 'light');
+      updateThemeUI(!isDark);
+    });
+
+    function updateThemeUI(isLight) {
+      const label = document.getElementById('themeLabel');
+      const sun = document.querySelector('.sun-icon');
+      const moon = document.querySelector('.moon-icon');
+      if (isLight) {
+        label.textContent = 'Dark';
+        sun.style.display = '';
+        moon.style.display = 'none';
+      } else {
+        label.textContent = 'Light';
+        sun.style.display = 'none';
+        moon.style.display = '';
+      }
+    }
+    updateThemeUI(!document.documentElement.classList.contains('dark'));
+
+    // ========== SPEED SHOWDOWN ==========
+    let isCyzoraSpeed = false;
+
+    function toggleSpeed() {
+      isCyzoraSpeed = document.getElementById('speedToggle').checked;
+
+      const loadTime = document.getElementById('loadTimeDisplay');
+      const score = document.getElementById('scoreDisplay');
+      const fcpBar = document.getElementById('fcpBar');
+      const ttiBar = document.getElementById('ttiBar');
+      const clsBar = document.getElementById('clsBar');
+      const fcpLabel = document.getElementById('fcpLabel');
+      const ttiLabel = document.getElementById('ttiLabel');
+      const clsLabel = document.getElementById('clsLabel');
+      const status = document.getElementById('showdownStatus');
+      const cardA = document.getElementById('speedCardA');
+      const cardB = document.getElementById('speedCardB');
+      const standardLabel = document.getElementById('standardLabel');
+      const cyzoraLabel = document.getElementById('cyzoraLabel');
+
+      if (isCyzoraSpeed) {
+        loadTime.innerHTML = '0.8<span class="text-lg font-medium" style="color: var(--textGray);">s</span>';
+        score.innerHTML = '100<span class="text-lg font-medium">%</span>';
+        score.style.color = 'var(--accent)';
+        loadTime.style.color = 'var(--accent)';
+        fcpBar.style.width = '96%';
+        fcpBar.style.background = 'var(--accent)';
+        ttiBar.style.width = '94%';
+        ttiBar.style.background = 'var(--accent)';
+        clsBar.style.width = '98%';
+        clsBar.style.background = 'var(--accent)';
+        fcpLabel.textContent = '0.4s';
+        ttiLabel.textContent = '0.6s';
+        clsLabel.textContent = '0.02';
+        status.innerHTML = 'Cyzora-optimized WordPress: lightweight themes, advanced caching, CDN, and database optimization.';
+        standardLabel.style.opacity = '0.4';
+        cyzoraLabel.style.opacity = '1';
+        cyzoraLabel.style.color = 'var(--accent)';
+        cardA.style.borderColor = 'var(--accent)';
+        cardB.style.borderColor = 'var(--accent)';
+      } else {
+        loadTime.innerHTML = '4.5<span class="text-lg font-medium" style="color: var(--textGray);">s</span>';
+        score.innerHTML = '45<span class="text-lg font-medium">%</span>';
+        score.style.color = 'var(--textGray)';
+        loadTime.style.color = 'var(--textLight)';
+        fcpBar.style.width = '62%';
+        fcpBar.style.background = 'var(--textGray)';
+        ttiBar.style.width = '32%';
+        ttiBar.style.background = 'var(--textGray)';
+        clsBar.style.width = '45%';
+        clsBar.style.background = 'var(--textGray)';
+        fcpLabel.textContent = '2.8s';
+        ttiLabel.textContent = '3.8s';
+        clsLabel.textContent = '0.35';
+        status.innerHTML = 'Standard WordPress sites suffer from plugin bloat and unoptimized queries.';
+        standardLabel.style.opacity = '1';
+        cyzoraLabel.style.opacity = '0.6';
+        cardA.style.borderColor = 'var(--border)';
+        cardB.style.borderColor = 'var(--border)';
+      }
+    }
+
+    // ========== QUESTIONNAIRE ==========
+    let qData = { siteType: '', payment: '', content: '', timeline: '' };
+    let qSelectedPlan = 'Silver';
+
+    function selectPlan(plan) {
+      qSelectedPlan = plan;
+    }
+
+    function selectQOption(key, btn) {
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.q-option').forEach(b => {
+        b.style.borderColor = 'transparent';
+        b.style.background = 'var(--grayDark)';
+      });
+      btn.style.borderColor = 'var(--accent)';
+      btn.style.background = 'color-mix(in srgb, var(--accent) 10%, var(--grayDark))';
+      qData[key] = btn.getAttribute('data-value');
+
+      // Enable next button
+      const stepEl = btn.closest('.q-step');
+      const stepNum = stepEl.getAttribute('data-step');
+      const nextBtn = document.getElementById('qNext' + stepNum);
+      if (nextBtn) nextBtn.disabled = false;
+    }
+
+    function nextStep(step) {
+      document.querySelector('.q-step.active').classList.remove('active');
+      document.querySelector('.q-step[data-step="' + step + '"]').classList.add('active');
+      updateStepDots(step);
+    }
+
+    function prevStep(step) {
+      document.querySelector('.q-step.active').classList.remove('active');
+      document.querySelector('.q-step[data-step="' + step + '"]').classList.add('active');
+      updateStepDots(step);
+    }
+
+    function updateStepDots(activeStep) {
+      document.querySelectorAll('.step-dot').forEach((dot, i) => {
+        const stepNum = i + 1;
+        if (stepNum <= activeStep) {
+          dot.style.background = 'var(--accent)';
+        } else {
+          dot.style.background = 'var(--border)';
+        }
+      });
+    }
+
+    function submitQuestionnaire() {
+      const summary = document.getElementById('qSummary');
+      const selectedPayment = qData.payment === 'M-Pesa & Card' ? ' with ' + qData.payment : '';
+      const contentStatus = qData.content === 'Ready' ? ' You have content ready.' : ' You need copywriting help.';
+      summary.innerHTML =
+        'Great choices! You want a <strong style="color: var(--textLight);">' + qData.siteType +
+        '</strong>' + selectedPayment + ' for the <strong style="color: var(--gold);">' +
+        qSelectedPlan + '</strong> package (KES ' +
+        (qSelectedPlan === 'Bronze' ? '20,000' : qSelectedPlan === 'Silver' ? '55,000' : '99,000') +
+        '). Timeline: <strong style="color: var(--textLight);">' + qData.timeline +
+        '</strong>.' + contentStatus + ' We\'ll be in touch within 24 hours!';
+
+      document.querySelector('.q-step.active').classList.remove('active');
+      document.querySelector('.q-step[data-step="5"]').classList.add('active');
+      updateStepDots(5);
+    }
+
+    function resetQuestionnaire() {
+      qData = { siteType: '', payment: '', content: '', timeline: '' };
+      document.querySelectorAll('.q-option').forEach(b => {
+        b.style.borderColor = 'transparent';
+        b.style.background = 'var(--grayDark)';
+      });
+      document.querySelectorAll('.q-step').forEach(s => s.classList.remove('active'));
+      document.querySelector('.q-step[data-step="1"]').classList.add('active');
+      updateStepDots(1);
+      document.querySelectorAll('[id^="qNext"]').forEach(b => b.disabled = true);
+    }
+
+    // ========== BOOKING ==========
+    let bookingCallType = 'zoom';
+    let bookingDateIdx = 0;
+    let bookingTimeIdx = 0;
+    const bookingDates = ['Mon, Jun 15', 'Tue, Jun 16', 'Wed, Jun 17', 'Thu, Jun 18'];
+    const bookingTimes = ['09:00 AM', '11:30 AM', '02:00 PM', '04:30 PM'];
+
+    function setCallType(type) {
+      bookingCallType = type;
+      const z = document.getElementById('btnZoom');
+      const p = document.getElementById('btnPhone');
+      const activeStyle = 'border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--textLight);';
+      const inactiveStyle = 'background: transparent; border: 1px solid var(--border); color: var(--textGray);';
+      z.style.cssText = type === 'zoom' ? activeStyle : inactiveStyle;
+      p.style.cssText = type === 'phone' ? activeStyle : inactiveStyle;
+    }
+
+    function selectDate(idx) {
+      bookingDateIdx = idx;
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById('date' + i);
+        if (i === idx) {
+          btn.style.cssText = 'border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--textLight);';
+          const span = btn.querySelector('span:first-child');
+          if (span) span.style.color = 'var(--accent)';
+        } else {
+          btn.style.cssText = 'background: transparent; border: 1px solid var(--border); color: var(--textGray);';
+          const span = btn.querySelector('span:first-child');
+          if (span) span.style.color = '';
+        }
+      }
+    }
+
+    function selectTime(idx) {
+      bookingTimeIdx = idx;
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById('time' + i);
+        if (i === idx) {
+          btn.style.cssText = 'border: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--textLight);';
+        } else {
+          btn.style.cssText = 'background: transparent; border: 1px solid var(--border); color: var(--textGray);';
+        }
+      }
+    }
+
+    function confirmBooking() {
+      const name = document.getElementById('clientName').value.trim() || 'Valued Partner';
+      const pkg = document.getElementById('bookingPackage').value;
+      const typeLabel = bookingCallType === 'zoom' ? 'Zoom Meeting' : 'Phone Call';
+      const msg = 'Awesome, <strong style="color: var(--textLight);">' + name +
+        '</strong>! Your 15-minute <strong style="color: var(--accent);">' + typeLabel +
+        '</strong> is booked for <strong style="color: var(--textLight);">' +
+        bookingDates[bookingDateIdx] + '</strong> at <strong style="color: var(--textLight);">' +
+        bookingTimes[bookingTimeIdx] + ' EAT</strong> regarding the <strong style="color: var(--gold);">' +
+        pkg + '</strong> Package.';
+      document.getElementById('successMessage').innerHTML = msg;
+      document.getElementById('bookingForm').classList.add('hidden');
+      document.getElementById('bookingSuccess').classList.remove('hidden');
+    }
+
+    function resetBooking() {
+      document.getElementById('clientName').value = '';
+      document.getElementById('clientEmail').value = '';
+      document.getElementById('bookingPackage').value = 'Silver';
+      document.getElementById('bookingForm').classList.remove('hidden');
+      document.getElementById('bookingSuccess').classList.add('hidden');
+      setCallType('zoom');
+      selectDate(0);
+      selectTime(0);
+    }
+
+    // ========== FAQ ACCORDION ==========
+    function toggleFaq(el) {
+      const answer = el.nextElementSibling;
+      const chevron = el.querySelector('.faq-chevron');
+      const isOpen = answer.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('open'));
+
+      if (!isOpen) {
+        answer.classList.add('open');
+        chevron.classList.add('open');
+      }
+    }
+
+    // ========== SMOOTH SCROLL ==========
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
