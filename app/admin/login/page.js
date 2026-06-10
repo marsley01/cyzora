@@ -20,14 +20,19 @@ export default function AdminLoginPage() {
     setLoading(true)
     setError('')
 
-    const { error: err } = await supabase.auth.signInWithPassword({ email, password })
+    try {
+      const { error: err } = await supabase.auth.signInWithPassword({ email, password })
 
-    if (err) {
-      setError(err.message)
+      if (err) {
+        setError(err.message)
+      } else {
+        window.location.href = '/admin'
+        return
+      }
+    } catch (err) {
+      setError(err?.message || 'Login failed. Check your credentials.')
+    } finally {
       setLoading(false)
-    } else {
-      router.push('/admin')
-      router.refresh()
     }
   }
 
