@@ -54,6 +54,17 @@ export default function ChatBot() {
     }).catch(() => {})
   }
 
+  function saveToMessages(text) {
+    const key = 'cyzora-msg-saved'
+    if (localStorage.getItem(key)) return
+    localStorage.setItem(key, '1')
+    fetch('/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'Chat Visitor', message: `Chat: ${text}` }),
+    }).catch(() => {})
+  }
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
@@ -85,6 +96,7 @@ export default function ChatBot() {
     setMessages(updated)
     setInput('')
     persistMessages(updated)
+    saveToMessages(msg)
 
     const reply = await getAIResponse(msg)
     const botMsg = { role: 'assistant', text: reply }
@@ -101,6 +113,7 @@ export default function ChatBot() {
     setMessages(updated)
     setShowQuickReplies(false)
     persistMessages(updated)
+    saveToMessages(reply)
 
     const botReply = await getAIResponse(reply)
     const botMsg = { role: 'assistant', text: botReply }

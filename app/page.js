@@ -54,6 +54,7 @@ export default function HomePage() {
   const [clientName, setClientName] = useState('')
   const [clientEmail, setClientEmail] = useState('')
   const [selectedPlan, setSelectedPlan] = useState('Silver')
+  const [customBudget, setCustomBudget] = useState('')
   const [confirmed, setConfirmed] = useState(false)
   const [bookingSending, setBookingSending] = useState(false)
   const [questionnaireSending, setQuestionnaireSending] = useState(false)
@@ -91,7 +92,7 @@ export default function HomePage() {
           name: clientName,
           email: clientEmail,
           callType,
-          packageName: selectedPlan,
+          packageName: selectedPlan === 'Custom' ? `Custom (KES ${customBudget || 'TBD'})` : selectedPlan,
           date: dates[selectedDate]?.date || '',
           time: times[selectedTime] || '',
         }),
@@ -356,8 +357,8 @@ export default function HomePage() {
                 </div>
               </div>
             </FadeUp>
-          ))}
-        </div>
+            ))}
+          </div>
       </section>
 
       {/* SERVICES - Crisp White */}
@@ -645,6 +646,17 @@ export default function HomePage() {
               </FadeUp>
             ))}
           </div>
+          <FadeUp>
+            <div className="mt-10 rounded-3xl p-8 text-center transition-all" style={{ background: 'var(--card)', border: '1px dashed var(--border)' }}>
+              <h3 className="text-xl font-bold" style={{ color: 'var(--textLight)' }}>Need Something Custom?</h3>
+              <p className="text-sm mt-2 max-w-lg mx-auto" style={{ color: 'var(--textGray)' }}>
+                Every project is unique. Tell us what you need and we'll build a tailored package with the right scope, timeline, and budget for you.
+              </p>
+              <a href="/#booking" className="inline-block mt-5 text-white font-bold text-sm px-8 py-3.5 rounded-xl transition-all hover:brightness-110" style={{ background: 'linear-gradient(135deg, #673DE0, #8B5CF6)' }}>
+                Request Custom Quote
+              </a>
+            </div>
+          </FadeUp>
         </div>
       </section>
 
@@ -764,7 +776,7 @@ export default function HomePage() {
                   <h3 className="text-2xl font-black text-white">Your proposal is being prepared!</h3>
                   <p className="text-sm max-w-md mx-auto leading-relaxed text-violet-200/80">
                     Great choices! You want a <strong className="text-white">{qData.siteType}</strong>
-                    {qData.payment === 'M-Pesa & Card' ? ' with M-Pesa & Card' : qData.payment === 'Just Card' ? ' with card payments' : ''} for the <strong className="text-violet-300">{qPlan}</strong> package (KES {qPlan === 'Bronze' ? '20,000' : qPlan === 'Silver' ? '55,000' : '99,000'}). Timeline: <strong className="text-white">{qData.timeline}</strong>. {qData.content === 'Ready' ? 'You have content ready.' : 'You need copywriting help.'} We\'ll be in touch within 24 hours!
+                    {qData.payment === 'M-Pesa & Card' ? ' with M-Pesa & Card' : qData.payment === 'Just Card' ? ' with card payments' : ''} for the <strong className="text-violet-300">{qPlan}</strong> package{qPlan === 'Custom' ? '' : ` (KES ${qPlan === 'Bronze' ? '20,000' : qPlan === 'Silver' ? '55,000' : '99,000'})`}. Timeline: <strong className="text-white">{qData.timeline}</strong>. {qData.content === 'Ready' ? 'You have content ready.' : 'You need copywriting help.'} We\'ll be in touch within 24 hours!
                   </p>
                   <div className="flex flex-wrap gap-3 justify-center pt-2">
                     <a href="https://wa.me/254758335592?text=Hi%20Cyzora,%20I%20just%20submitted%20my%20project%20scope." target="_blank" rel="noopener noreferrer" className="text-white font-bold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition-all bg-emerald-500 hover:brightness-110">
@@ -871,7 +883,12 @@ export default function HomePage() {
                         <option value="Bronze">Bronze Package (KES 20,000)</option>
                         <option value="Silver">Silver Package (KES 55,000)</option>
                         <option value="Gold">Gold Package (KES 99,000)</option>
+                        <option value="Custom">Custom Package</option>
                       </select>
+                      {selectedPlan === 'Custom' && (
+                        <input type="text" value={customBudget} onChange={(e) => setCustomBudget(e.target.value)} placeholder="Your budget (KES)"
+                          className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none mt-2" style={{ background: 'var(--grayDark)', color: 'var(--textLight)', border: '1px solid var(--border)' }} />
+                      )}
                     </div>
 
                     <div className="space-y-3">
