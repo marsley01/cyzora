@@ -47,8 +47,13 @@ export default function RootLayout({ children }) {
     }
   }, [])
 
-  function handleModalSubmit(e) {
+  async function handleModalSubmit(e) {
     e.preventDefault()
+    await fetch('/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, message: msg }),
+    })
     setSubmitted(true)
     setTimeout(() => {
       setSubmitted(false)

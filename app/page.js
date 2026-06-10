@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, useLayoutEffect } from 'react'
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react'
 import FadeUp from '@/components/FadeUp'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -55,6 +55,8 @@ export default function HomePage() {
   const [clientEmail, setClientEmail] = useState('')
   const [selectedPlan, setSelectedPlan] = useState('Silver')
   const [confirmed, setConfirmed] = useState(false)
+  const [bookingSending, setBookingSending] = useState(false)
+  const [questionnaireSending, setQuestionnaireSending] = useState(false)
 
   const dates = [
     { day: 'Mon', date: 'Jun 15' },
@@ -68,12 +70,58 @@ export default function HomePage() {
     setQData(prev => ({ ...prev, [key]: value }))
   }
 
-  function nextQStep(s) { setQStep(s) }
+  function nextQStep(s) {
+    if (s === 5 && !questionnaireSending) submitQuestionnaire()
+    else setQStep(s)
+  }
   function prevQStep(s) { setQStep(s) }
 
   const qReady = qData.siteType && qData.payment && qData.content && qData.timeline
 
   function toggleFaq(idx) { setOpenFaq(openFaq === idx ? null : idx) }
+
+  async function submitBooking() {
+    if (bookingSending) return
+    setBookingSending(true)
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: clientName,
+          email: clientEmail,
+          callType,
+          packageName: selectedPlan,
+          date: dates[selectedDate]?.date || '',
+          time: times[selectedTime] || '',
+        }),
+      })
+      if (res.ok) setConfirmed(true)
+    } finally {
+      setBookingSending(false)
+    }
+  }
+
+  async function submitQuestionnaire() {
+    if (questionnaireSending) return
+    setQuestionnaireSending(true)
+    try {
+      await fetch('/api/questionnaire', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          siteType: qData.siteType,
+          payment: qData.payment,
+          content: qData.content,
+          timeline: qData.timeline,
+          packageName: qPlan,
+        }),
+      })
+    } finally {
+      setQuestionnaireSending(false)
+      setQStep(5)
+    }
+  }
 
   // GSAP refs
   const heroRef = useRef(null)
@@ -287,7 +335,6 @@ export default function HomePage() {
                 <p className="text-xs font-bold uppercase tracking-widest mb-2 text-violet-300">Performance Showdown</p>
                 <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">See the Cyzora difference</h2>
                 <p className="text-sm mt-3 text-violet-200/80">Toggle between a standard page template and a Cyzora bespoke build. Every millisecond matters for your search rankings and conversion rates.</p>
-              </div>
               </div>
             </FadeUp>
             <FadeUp>
@@ -805,10 +852,11 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    <button onClick={() => setConfirmed(true)}
-                      className="w-full text-white font-extrabold text-sm py-4 rounded-xl transition-all hover:brightness-110"
+                    <button onClick={submitBooking}
+                      disabled={bookingSending || !clientName || !clientEmail}
+                      className="w-full text-white font-extrabold text-sm py-4 rounded-xl transition-all hover:brightness-110 disabled:opacity-50"
                       style={{ background: 'rgb(var(--accent-rgb))', boxShadow: '0 8px 24px var(--glow)' }}>
-                      Confirm Consultation Call
+                      {bookingSending ? 'Submitting...' : 'Confirm Consultation Call'}
                     </button>
                   </div>
                 </div>

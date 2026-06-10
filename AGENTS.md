@@ -8,3 +8,31 @@
 - Project: cyzora
 - CLI user: mashmarsley-9658
 - Auto-deploys from GitHub pushes to master
+
+# Supabase Setup (for admin dashboard, bookings, questionnaires)
+- Admin dashboard: https://cyzora.vercel.app/admin
+- Login page: https://cyzora.vercel.app/admin/login
+
+## Setup Steps
+1. Create a Supabase project at https://supabase.com (free tier works)
+2. Go to Project Settings > API and copy your URL and anon key
+3. Set environment variables in Vercel:
+   - NEXT_PUBLIC_SUPABASE_URL=<your-project-url>
+   - NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
+4. Run the schema from `supabase/schema.sql` in Supabase SQL Editor
+5. In Supabase Auth, enable email/password sign-up (disable public sign-up after creating your admin)
+6. Create your admin account:
+   - Sign up via `/api/auth/signup` with email + password
+   - Or use Supabase Dashboard > Authentication > Users > Add User
+   - Then run: `INSERT INTO admins (id, email, name) VALUES ('<user-uuid>', '<email>', 'Mash');`
+7. Access the admin panel at `/admin` and log in
+
+## API Routes
+- POST /api/bookings — Create a booking
+- GET /api/bookings — List all bookings (admin only via RLS)
+- POST /api/questionnaire — Submit a project scope
+- GET /api/questionnaire — List scopes (admin only)
+- GET/POST /api/tickets — List/create support tickets
+- PATCH /api/tickets/[id] — Update ticket status/priority
+- GET/POST /api/tickets/[id]/messages — Ticket conversation
+- GET/POST /api/messages — List/submit contact messages
