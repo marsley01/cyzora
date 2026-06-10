@@ -27,8 +27,18 @@
    - Then run: `INSERT INTO admins (id, email, name) VALUES ('<user-uuid>', '<email>', 'Mash');`
 7. Access the admin panel at `/admin` and log in
 
+## Gmail / Email Notifications
+- When someone books a call, an email is sent to the Gmail address configured in `GMAIL_EMAIL`
+- To set up: https://myaccount.google.com/apppasswords (generate an app password)
+- Add `GMAIL_EMAIL` and `GMAIL_APP_PASSWORD` as Vercel environment variables
+
+## Chatbot
+- Chat conversations are saved to Supabase and viewable in the admin dashboard under the "Chats" tab
+- Each visitor gets a unique session ID stored in localStorage
+- Conversations persist across page refreshes
+
 ## API Routes
-- POST /api/bookings — Create a booking
+- POST /api/bookings — Create a booking (also sends email notification)
 - GET /api/bookings — List all bookings (admin only via RLS)
 - POST /api/questionnaire — Submit a project scope
 - GET /api/questionnaire — List scopes (admin only)
@@ -36,3 +46,4 @@
 - PATCH /api/tickets/[id] — Update ticket status/priority
 - GET/POST /api/tickets/[id]/messages — Ticket conversation
 - GET/POST /api/messages — List/submit contact messages
+- GET/POST /api/messages/chat — List/save chat conversations

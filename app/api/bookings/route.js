@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase-server'
+import { sendBookingNotification } from '@/lib/email'
 
 export async function GET() {
   const supabase = await createClient()
@@ -36,5 +37,9 @@ export async function POST(request) {
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  // Send email notification to admin (non-blocking)
+  sendBookingNotification(data)
+
   return NextResponse.json(data, { status: 201 })
 }

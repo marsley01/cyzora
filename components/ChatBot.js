@@ -13,6 +13,16 @@ const botResponses = {
 
 const quickReplies = ['Website', 'Shopify Store', 'Portal', 'Pricing']
 
+function getSessionId() {
+  if (typeof window === 'undefined') return ''
+  let id = localStorage.getItem('cyzora-chat-session')
+  if (!id) {
+    id = crypto.randomUUID()
+    localStorage.setItem('cyzora-chat-session', id)
+  }
+  return id
+}
+
 export default function ChatBot() {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState([])
@@ -20,12 +30,34 @@ export default function ChatBot() {
   const [showQuickReplies, setShowQuickReplies] = useState(false)
   const messagesEndRef = useRef(null)
 
+  const sessionId = getSessionId()
+
+  // Load previous messages on open
   useEffect(() => {
-    if (open && messages.length === 0) {
+    if (!open) return
+    const saved = localStorage.getItem('cyzora-chat-history')
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        setMessages(parsed)
+        const lastRole = parsed.length > 0 ? parsed[parsed.length - 1].role : null
+        setShowQuickReplies(lastRole === 'bot')
+      } catch {}
+    } else {
       setMessages([{ role: 'bot', text: "Hi! I'm the CyzoraTech assistant. What are you looking to build?" }])
       setShowQuickReplies(true)
     }
-  }, [open, messages.length])
+  }, [open])
+
+  // Save messages to localStorage and Supabase
+  function persistMessages(updatedMessages) {
+    localStorage.setItem('cyzora-chat-history', JSON.stringify(updatedMessages))
+    fetch('/api/messages/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId, messages: updatedMessages }),
+    }).catch(() => {})
+  }
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -34,28 +66,32 @@ export default function ChatBot() {
   function handleSend(text) {
     const msg = text || input
     if (!msg.trim()) return
-    setMessages((prev) => [...prev, { role: 'user', text: msg }])
+    const updated = [...messages, { role: 'user', text: msg }]
+    setMessages(updated)
     setInput('')
     setShowQuickReplies(false)
+    persistMessages(updated)
 
     setTimeout(() => {
       const reply = botResponses[msg] || "Thanks for reaching out! Leave your email and we'll get back to you within 24 hours."
-      setMessages((prev) => [...prev, { role: 'bot', text: reply }])
-      if (botResponses[msg]) {
-        setShowQuickReplies(false)
-      } else {
-        setShowQuickReplies(false)
-      }
+      const final = [...updated, { role: 'bot', text: reply }]
+      setMessages(final)
+      setShowQuickReplies(!!botResponses[msg])
+      persistMessages(final)
     }, 800)
   }
 
   function handleQuickReply(reply) {
-    setMessages((prev) => [...prev, { role: 'user', text: reply }])
+    const updated = [...messages, { role: 'user', text: reply }]
+    setMessages(updated)
     setShowQuickReplies(false)
+    persistMessages(updated)
 
     setTimeout(() => {
       const replyText = botResponses[reply] || "Thanks for reaching out! Leave your email and we'll get back to you within 24 hours."
-      setMessages((prev) => [...prev, { role: 'bot', text: replyText }])
+      const final = [...updated, { role: 'bot', text: replyText }]
+      setMessages(final)
+      persistMessages(final)
     }, 800)
   }
 

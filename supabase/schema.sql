@@ -126,7 +126,28 @@ CREATE POLICY "Admins can read messages"
   ON messages FOR SELECT
   USING (EXISTS (SELECT 1 FROM admins WHERE id = auth.uid()));
 
--- 7. Create initial admin function (call this after creating a user in Auth)
+-- 7. Chat Messages (persisted chatbot conversations)
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  session_id TEXT NOT NULL,
+  role TEXT NOT NULL CHECK (role IN ('bot', 'user')),
+  text TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_chat_messages_session ON chat_messages(session_id);
+
+ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can insert chat messages"
+  ON chat_messages FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "Admins can read chat messages"
+  ON chat_messages FOR SELECT
+  USING (EXISTS (SELECT 1 FROM admins WHERE id = auth.uid()));
+
+-- 8. Create initial admin function (call this after creating a user in Auth)
 -- Run this separately after creating an admin user in Supabase Auth:
 -- INSERT INTO admins (id, email, name)
 -- VALUES ('<user-uuid-from-auth>', '<admin-email>', 'Mash');

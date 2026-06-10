@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, MessageSquare, Ticket, DollarSign,
   Globe, Settings, Bell, Send, X, Search,
-  LogOut, RefreshCw
+  LogOut, RefreshCw, MessageCircle, ChevronDown
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
@@ -14,6 +14,7 @@ const tabs = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard },
   { id: 'bookings', label: 'Bookings', icon: MessageSquare },
   { id: 'questionnaires', label: 'Scopes', icon: Ticket },
+  { id: 'chats', label: 'Chats', icon: MessageCircle },
   { id: 'tickets', label: 'Tickets', icon: Ticket },
   { id: 'messages', label: 'Messages', icon: MessageSquare },
   { id: 'settings', label: 'Settings', icon: Settings },
@@ -38,6 +39,10 @@ export default function SupportDashboard() {
   const [selectedTicket, setSelectedTicket] = useState(null)
   const [ticketReply, setTicketReply] = useState('')
 
+  const [chatSessions, setChatSessions] = useState([])
+  const [expandedChat, setExpandedChat] = useState(null)
+  const [chatMessages, setChatMessages] = useState({})
+
   const [expandedBooking, setExpandedBooking] = useState(null)
   const [expandedScope, setExpandedScope] = useState(null)
 
@@ -53,16 +58,37 @@ export default function SupportDashboard() {
   }, [])
 
   const fetchData = useCallback(async () => {
-    const [b, q, t, m] = await Promise.all([
+    const [b, q, t, m, c] = await Promise.all([
       fetch('/api/bookings').then(r => r.json()),
       fetch('/api/questionnaire').then(r => r.json()),
       fetch('/api/tickets').then(r => r.json()),
       fetch('/api/messages').then(r => r.json()),
+      fetch('/api/messages/chat').then(r => r.json()),
     ])
     if (!b.error) setBookings(b)
     if (!q.error) setQuestionnaires(q)
     if (!t.error) setTickets(t)
     if (!m.error) setMessages(m)
+    if (!c.error) {
+      // Group messages by session_id
+      const sessions = {}
+      for (const msg of c) {
+        if (!sessions[msg.session_id]) sessions[msg.session_id] = []
+        sessions[msg.session_id].push(msg)
+      }
+      // Sort sessions by most recent message
+      const sorted = Object.entries(sessions)
+        .map(([id, msgs]) => ({
+          id,
+          messages: msgs.reverse(),
+          lastMessage: msgs[0].text,
+          lastTime: msgs[0].created_at,
+          userMessage: msgs.find(m => m.role === 'user')?.text || '',
+          count: msgs.length,
+        }))
+        .sort((a, b) => new Date(b.lastTime) - new Date(a.lastTime))
+      setChatSessions(sorted)
+    }
 
     setStats({
       tickets: Array.isArray(t) ? t.filter(tk => tk.status !== 'Resolved').length : 0,
@@ -196,6 +222,7 @@ export default function SupportDashboard() {
               {activeTab === 'overview' ? `Good ${new Date().getHours() < 12 ? 'morning' : 'afternoon'}, ${admin?.name || 'Admin'} 👋` : ''}
               {activeTab === 'bookings' ? 'Consultation Bookings' : ''}
               {activeTab === 'questionnaires' ? 'Project Scopes' : ''}
+              {activeTab === 'chats' ? 'Live Chat History' : ''}
               {activeTab === 'tickets' ? 'Support Tickets' : ''}
               {activeTab === 'messages' ? 'Messages' : ''}
               {activeTab === 'settings' ? 'Settings' : ''}
@@ -351,6 +378,67 @@ export default function SupportDashboard() {
                           <div className="font-body text-xs" style={{ color: 'var(--muted)' }}>Package</div>
                           <div className="font-body text-sm font-medium mt-0.5" style={{ color: 'var(--text)' }}>{q.package_name}</div>
                         </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* CHATS */}
+        {activeTab === 'chats' && (
+          <div className="space-y-3">
+            {chatSessions.length === 0 && (
+              <div className="font-body text-sm py-8 text-center" style={{ color: 'var(--muted)' }}>No chat conversations yet.</div>
+            )}
+            {chatSessions.map((session) => (
+              <div key={session.id} className="rounded-xl overflow-hidden" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
+                <div
+                  className="flex items-center justify-between p-4 cursor-pointer transition-colors"
+                  onClick={() => setExpandedChat(expandedChat === session.id ? null : session.id)}
+                  style={{ background: expandedChat === session.id ? 'rgba(103,61,224,0.05)' : 'transparent' }}
+                >
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ background: 'rgba(103,61,224,0.15)' }}>
+                      <MessageCircle size={16} style={{ color: '#673DE0' }} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-body text-sm font-semibold truncate" style={{ color: 'var(--text)' }}>
+                        {session.userMessage || 'Chat session'}
+                      </div>
+                      <div className="font-body text-xs truncate" style={{ color: 'var(--muted)' }}>
+                        {session.count} messages · {new Date(session.lastTime).toLocaleDateString()} {new Date(session.lastTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
+                    </div>
+                  </div>
+                  <ChevronDown
+                    size={16}
+                    style={{ color: 'var(--muted)', transform: expandedChat === session.id ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+                  />
+                </div>
+                <AnimatePresence>
+                  {expandedChat === session.id && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 space-y-2" style={{ borderTop: '1px solid var(--border)' }}>
+                        {session.messages.map((msg, i) => (
+                          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} pt-2`}>
+                            <div className="font-body text-sm px-3 py-2 max-w-[75%]" style={{
+                              background: msg.role === 'user' ? 'linear-gradient(135deg, #673DE0, #8B5CF6)' : 'var(--bg)',
+                              color: msg.role === 'user' ? 'white' : 'var(--text)',
+                              borderRadius: msg.role === 'user' ? '12px 0 12px 12px' : '0 12px 12px 12px',
+                              border: msg.role === 'user' ? 'none' : '1px solid var(--border)',
+                            }}>
+                              {msg.text}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </motion.div>
                   )}
