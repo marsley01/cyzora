@@ -182,34 +182,32 @@ export default function HomePage() {
   return (
     <>
       {/* HERO */}
-      <div className="hero-section" ref={heroRef}>
-        {/* Floating Hero Image */}
-        <div className="hero-image-wrapper" ref={heroImageRef}>
-          <img src="/hero-image.png" alt="Abstract 3D shapes" width={720} height={720} />
-        </div>
+      <div className="hero-section relative bg-cover bg-center" style={{ backgroundImage: "url('/hero-landscape.png')" }} ref={heroRef}>
+        {/* Dark Premium Overlay for Text Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-violet-950/85 to-black/50 z-0 pointer-events-none" />
 
         <section className="max-w-6xl mx-auto px-6 pt-32 pb-24 w-full relative z-10">
           <div className="hero-content">
             <div ref={heroBadgeRef} style={{ opacity: 0 }}>
-              <span className="hero-badge mb-6">
-                <span className="hero-badge-dot"></span>
+              <span className="hero-badge mb-6 bg-white/10 text-white border-white/20">
+                <span className="hero-badge-dot bg-white"></span>
                 Premium Web Development Agency
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] mb-8" style={{ color: 'var(--textLight)' }}>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] mb-8 text-white">
               <span className="hero-line"><span className="hero-line-inner" ref={heroLine1Ref} style={{ transform: 'translateY(100%)', opacity: 0 }}>We build stunning</span></span>
-              <span className="hero-line"><span className="hero-line-inner" ref={heroLine2Ref} style={{ transform: 'translateY(100%)', opacity: 0 }}>websites <span style={{ color: 'rgb(var(--accent-rgb))' }}>your way.</span></span></span>
+              <span className="hero-line"><span className="hero-line-inner" ref={heroLine2Ref} style={{ transform: 'translateY(100%)', opacity: 0 }}>websites <span style={{ color: '#a78bfa' }}>your way.</span></span></span>
             </h1>
 
-            <p ref={heroDescRef} className="text-lg sm:text-xl max-w-xl font-normal leading-relaxed tracking-tight mb-12" style={{ color: 'var(--textGray)', opacity: 0 }}>From custom design architectures to tailored high-performing web apps, we build responsive, lightning-fast digital platforms designed to drive revenue, capture leads, and enhance your digital authority across Kenya and beyond.</p>
+            <p ref={heroDescRef} className="text-lg sm:text-xl max-w-xl font-normal leading-relaxed tracking-tight mb-12 text-zinc-300" style={{ opacity: 0 }}>From custom design architectures to tailored high-performing web apps, we build responsive, lightning-fast digital platforms designed to drive revenue, capture leads, and enhance your digital authority across Kenya and beyond.</p>
 
             <div ref={heroCtaRef} className="flex flex-col sm:flex-row items-start gap-4" style={{ opacity: 0 }}>
               <a href="/#questionnaire" className="w-full sm:w-auto text-white font-bold text-sm px-8 py-4 rounded-2xl hover:brightness-110 transition-all flex items-center justify-center space-x-2 shadow-lg" style={{ background: 'rgb(var(--accent-rgb))', boxShadow: '0 8px 32px var(--glow)' }}>
                 <span>Start Your Project</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
               </a>
-              <a href="https://wa.me/254758335592?text=Hi%20Cyzora%20Tech,%20I'd%20like%20to%20discuss%20a%20website%20project." target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto font-bold text-sm px-8 py-4 rounded-2xl transition-all flex items-center justify-center space-x-2 hover:border-[rgb(var(--accent-rgb))]" style={{ color: 'var(--textGray)', border: '1px solid var(--border)', background: 'var(--card)' }}>
+              <a href="https://wa.me/254758335592?text=Hi%20Cyzora%20Tech,%20I'd%20like%20to%20discuss%20a%20website%20project." target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto font-bold text-sm px-8 py-4 rounded-2xl transition-all flex items-center justify-center space-x-2 hover:border-white/40 text-white" style={{ border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.05)' }}>
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" style={{ color: 'var(--whatsapp)' }}><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 1.966 14.12 1.01 11.49 1.01c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.452 3.39 1.31 4.877L1.87 20.43l4.777-1.276z"/></svg>
                 <span>Chat on WhatsApp</span>
               </a>
