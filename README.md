@@ -1,4 +1,4 @@
-# Cyzora Tech
+# Cyzora Design
 
 **Premium Web Design & Development Agency — Nairobi, Kenya**
 

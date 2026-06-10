@@ -175,7 +175,7 @@ export default function SupportDashboard() {
     <div className="flex min-h-screen">
       <aside className="w-64 fixed left-0 top-0 h-full z-20 pt-16" style={{ background: 'var(--surface)' }}>
         <div className="p-6">
-          <div className="font-display text-lg font-extrabold" style={{ color: 'var(--text)' }}>CyzoraTech</div>
+          <div className="font-display text-lg font-extrabold" style={{ color: 'var(--text)' }}>Cyzora Design</div>
         </div>
         <nav className="px-3 space-y-1">
           {tabs.map((tab) => {

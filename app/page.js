@@ -233,7 +233,7 @@ export default function HomePage() {
       {
         '@type': 'Organization',
         '@id': 'https://cyzora.vercel.app/#organization',
-        name: 'Cyzora Tech',
+        name: 'Cyzora Design',
         url: 'https://cyzora.vercel.app',
         logo: 'https://cyzora.vercel.app/hero-image.png',
         description: 'Nairobi-based premium web design and development agency. Custom websites, e-commerce, portals, and applications with M-Pesa integration.',
@@ -247,7 +247,7 @@ export default function HomePage() {
         '@type': 'WebSite',
         '@id': 'https://cyzora.vercel.app/#website',
         url: 'https://cyzora.vercel.app',
-        name: 'Cyzora Tech — Premium Web Design & Development Agency Nairobi',
+        name: 'Cyzora Design — Premium Web Design & Development Agency Nairobi',
         description: 'Nairobi-based web agency building custom websites, stores, and platforms for Kenyan & East African brands.',
         publisher: { '@id': 'https://cyzora.vercel.app/#organization' },
         inLanguage: 'en-KE',
@@ -255,7 +255,7 @@ export default function HomePage() {
       {
         '@type': 'LocalBusiness',
         '@id': 'https://cyzora.vercel.app/#business',
-        name: 'Cyzora Tech',
+        name: 'Cyzora Design',
         image: 'https://cyzora.vercel.app/hero-image.png',
         url: 'https://cyzora.vercel.app',
         telephone: ['+254-758-335-592', '+254-749-610-772'],
@@ -314,7 +314,7 @@ export default function HomePage() {
                 <span>Start Your Project</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
               </a>
-              <a href="https://wa.me/254758335592?text=Hi%20Cyzora%20Tech,%20I'd%20like%20to%20discuss%20a%20website%20project." target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto font-bold text-sm px-8 py-4 rounded-2xl transition-all flex items-center justify-center space-x-2 hover:border-white/40 text-white" style={{ border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.05)' }}>
+              <a href="https://wa.me/254758335592?text=Hi%20Cyzora%20Design,%20I'd%20like%20to%20discuss%20a%20website%20project." target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto font-bold text-sm px-8 py-4 rounded-2xl transition-all flex items-center justify-center space-x-2 hover:border-white/40 text-white" style={{ border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.05)' }}>
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" style={{ color: 'var(--whatsapp)' }}><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 1.966 14.12 1.01 11.49 1.01c-5.44 0-9.866 4.372-9.87 9.802 0 1.714.452 3.39 1.31 4.877L1.87 20.43l4.777-1.276z"/></svg>
                 <span>Chat on WhatsApp</span>
               </a>

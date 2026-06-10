@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'var(--bg)' }}>
       <div className="w-full max-w-sm rounded-2xl p-8" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
         <div className="text-center mb-8">
-          <div className="font-display text-2xl font-extrabold mb-1" style={{ color: 'var(--text)' }}>CyzoraTech</div>
+          <div className="font-display text-2xl font-extrabold mb-1" style={{ color: 'var(--text)' }}>Cyzora Design</div>
           <div className="font-body text-sm" style={{ color: 'var(--muted)' }}>Admin Dashboard</div>
         </div>
 
@@ -51,7 +51,7 @@ export default function AdminLoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@cyzoratech.com"
+              placeholder="admin@cyzora.design"
               required
               className="w-full font-body text-sm p-3 rounded-xl outline-none"
               style={{ background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }}

@@ -59,7 +59,7 @@ export default function Footer() {
 
         <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] mt-8 text-violet-300/60">
           <div>
-            <p>&copy; {new Date().getFullYear()} Cyzora Tech. Premium custom digital solutions. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Cyzora Design. Premium custom digital solutions. All rights reserved.</p>
             <p className="mt-1">Founded by Marsley Mash &amp; Emmanuel Charles</p>
           </div>
           <div className="flex space-x-6 mt-4 sm:mt-0 text-violet-300/70">
