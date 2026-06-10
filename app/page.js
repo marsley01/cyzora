@@ -227,8 +227,67 @@ export default function HomePage() {
     return () => ctx.revert()
   }, [])
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': 'https://cyzora.vercel.app/#organization',
+        name: 'Cyzora Tech',
+        url: 'https://cyzora.vercel.app',
+        logo: 'https://cyzora.vercel.app/hero-image.png',
+        description: 'Nairobi-based premium web design and development agency. Custom websites, e-commerce, portals, and applications with M-Pesa integration.',
+        address: { '@type': 'PostalAddress', addressLocality: 'Nairobi', addressCountry: 'KE' },
+        contactPoint: [
+          { '@type': 'ContactPoint', telephone: '+254-758-335-592', contactType: 'customer service', email: 'hi@cyzorastudio.com' },
+        ],
+        sameAs: ['https://wa.me/254758335592'],
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://cyzora.vercel.app/#website',
+        url: 'https://cyzora.vercel.app',
+        name: 'Cyzora Tech — Premium Web Design & Development Agency Nairobi',
+        description: 'Nairobi-based web agency building custom websites, stores, and platforms for Kenyan & East African brands.',
+        publisher: { '@id': 'https://cyzora.vercel.app/#organization' },
+        inLanguage: 'en-KE',
+      },
+      {
+        '@type': 'LocalBusiness',
+        '@id': 'https://cyzora.vercel.app/#business',
+        name: 'Cyzora Tech',
+        image: 'https://cyzora.vercel.app/hero-image.png',
+        url: 'https://cyzora.vercel.app',
+        telephone: ['+254-758-335-592', '+254-749-610-772'],
+        email: 'hi@cyzorastudio.com',
+        priceRange: 'KSh 20,000 - 99,000',
+        address: { '@type': 'PostalAddress', addressLocality: 'Nairobi', addressCountry: 'KE' },
+        areaServed: ['Kenya', 'East Africa'],
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'Web Development Services',
+          itemListElement: [
+            { '@type': 'Offer', name: 'Bronze Package', price: '20000', priceCurrency: 'KES', description: '5-page responsive website' },
+            { '@type': 'Offer', name: 'Silver Package', price: '55000', priceCurrency: 'KES', description: '10-page responsive website with SEO' },
+            { '@type': 'Offer', name: 'Gold Package', price: '99000', priceCurrency: 'KES', description: 'Up to 20-page website with full SEO and analytics' },
+          ],
+        },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://cyzora.vercel.app/#faq',
+        mainEntity: faqs.map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+    ],
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* HERO */}
       <div className="hero-section relative bg-cover bg-center" style={{ backgroundImage: "url('/hero-landscape.png')" }} ref={heroRef}>
         {/* Dark Premium Overlay for Text Contrast */}
