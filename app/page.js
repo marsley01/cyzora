@@ -18,12 +18,12 @@ const plans = [
 ]
 
 const portfolio = [
-  { name: 'Trivo Kenya', desc: 'E-commerce portal for smartphone accessories', tags: ['Custom Web App','Tailwind CSS','M-Pesa IPN'], gradient: 'linear-gradient(135deg, #7c3aed20, #6d28d940)' },
-  { name: 'PrimeCart Logistics', desc: 'Corporate portal with shipment tracking', tags: ['React','Tailwind CSS','Node.js API'], gradient: 'linear-gradient(135deg, #7c3aed20, #8b5cf640)' },
-  { name: 'Belloria Beauty', desc: 'E-commerce store for premium beauty', tags: ['React Next.js','E-commerce API','M-Pesa'], gradient: 'linear-gradient(135deg, #6d28d930, #7c3aed50)' },
-  { name: 'Munchify', desc: 'Food discovery & ordering platform', tags: ['Next.js','Tailwind CSS','M-Pesa API'], gradient: 'linear-gradient(135deg, #8b5cf620, #7c3aed40)' },
-  { name: 'Edyfra Learning', desc: 'Social learning platform with courses', tags: ['React','Firebase','Tailwind CSS'], gradient: 'linear-gradient(135deg, #7c3aed15, #6d28d945)' },
-  { name: 'Client Portal', desc: 'Secure dashboard with support ticketing', tags: ['Next.js','Supabase','Tailwind CSS'], gradient: 'linear-gradient(135deg, #a78bfa20, #7c3aed50)' },
+  { name: 'Aura Fashion', desc: 'Premium clothing and fashion boutique', tags: ['Next.js', 'Tailwind', 'E-commerce'], image: '/projects/aura-fashion.png', link: 'https://aura-fashion-ke.vercel.app/', review: 'Cyzora delivered a stunning layout that perfectly highlights our new collections. Sales are up 30%!' },
+  { name: 'Edyfra Learning', desc: 'Social learning platform with courses', tags: ['React', 'Firebase', 'Tailwind CSS'], image: '/projects/edyfra.png', link: 'https://edyfra-v2.vercel.app/', review: 'The dynamic layout and clean structure make managing our courses simple and automated.' },
+  { name: 'Belloria Beauty', desc: 'E-commerce store for premium beauty', tags: ['React Next.js', 'E-commerce API', 'M-Pesa'], image: '/projects/belloria.png', link: 'https://belloriabeauty.store/', review: 'The custom beauty portal works perfectly. The design captures our premium brand identity beautifully.' },
+  { name: 'Trivo Kenya', desc: 'E-commerce portal for smartphone accessories', tags: ['Custom Web App', 'Tailwind CSS', 'M-Pesa IPN'], image: '/projects/trivo.png', link: 'https://trivokenya.store/', review: 'Cyzora built our e-commerce platform exactly our way. The custom checkout and M-Pesa flows are flawless!' },
+  { name: 'PrimeCart Logistics', desc: 'Corporate portal with shipment tracking', tags: ['React', 'Tailwind CSS', 'Node.js API'], gradient: 'linear-gradient(135deg, #7c3aed20, #8b5cf640)', review: 'Our delivery tracking page is incredibly fast and our conversion rates went up by 40% after launching.' },
+  { name: 'Client Portal', desc: 'Secure dashboard with support ticketing', tags: ['Next.js', 'Supabase', 'Tailwind CSS'], gradient: 'linear-gradient(135deg, #a78bfa20, #7c3aed50)', review: 'Bespoke custom app that handles our support tickets seamlessly.' },
 ]
 
 const faqs = [
@@ -259,7 +259,7 @@ export default function HomePage() {
         name: 'Cyzora Design',
         image: 'https://cyzora.vercel.app/hero-image.png',
         url: 'https://cyzora.vercel.app',
-        telephone: ['+254-758-335-592', '+254-749-610-772'],
+        telephone: ['+254-758-335-592', '+254-740-610-772'],
         email: 'hi@cyzorastudio.com',
         priceRange: 'KSh 20,000 - 99,000',
         address: { '@type': 'PostalAddress', addressLocality: 'Nairobi', addressCountry: 'KE' },
@@ -361,9 +361,40 @@ export default function HomePage() {
           </div>
       </section>
 
-      {/* SERVICES - Crisp White */}
-      <section id="services" className="py-24 bg-white dark:bg-zinc-950" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="max-w-6xl mx-auto px-6">
+      {/* FRAMEWORKS - New Dynamic Section */}
+      <section id="frameworks" className="py-24 bg-zinc-50 dark:bg-zinc-950 relative overflow-hidden" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, var(--gold) 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <FadeUp>
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'rgb(var(--accent-rgb))' }}>The Modern Stack</p>
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight" style={{ color: 'var(--textLight)' }}>Technologies We Build With</h2>
+              <p className="text-sm mt-3" style={{ color: 'var(--textGray)' }}>We leverage industry-leading frameworks to deliver fast, secure, and highly scalable digital experiences.</p>
+            </div>
+          </FadeUp>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {[
+              { name: 'Next.js', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64s28.7 64 64 64c11.2 0 21.7-2.9 30.8-7.9L48.4 55.3v36.6h-6.8V41.8h6.8l50.5 75.8C116.4 106.2 128 86.5 128 64c0-35.3-28.7-64-64-64zm22.1 84.6l-7.4-11.2v-31.5h6.8v42.7h.6z"/></svg> },
+              { name: 'React', icon: <svg className="w-8 h-8" viewBox="-11.5 -10.23174 23 20.46348"><circle cx="0" cy="0" r="2.05" fill="#61dafb"/><g stroke="#61dafb" strokeWidth="1" fill="none"><ellipse rx="11" ry="4.2"/><ellipse rx="11" ry="4.2" transform="rotate(60)"/><ellipse rx="11" ry="4.2" transform="rotate(120)"/></g></svg> },
+              { name: 'Tailwind CSS', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="#06B6D4" d="M64 25.6c-17.1 0-27.7 8.5-32 25.6 6.4-8.5 13.9-10.7 22.4-6.4 4.8 2.5 8.2 6.1 13.1 11.2C75 63.8 84.3 73.6 106.7 73.6c17.1 0 27.7-8.5 32-25.6-6.4 8.5-13.9 10.7-22.4 6.4-4.8-2.5-8.2-6.1-13.1-11.2-7.5-7.8-16.8-17.6-39.2-17.6zm-42.7 48c-17.1 0-27.7 8.5-32 25.6 6.4-8.5 13.9-10.7 22.4-6.4 4.8 2.5 8.2 6.1 13.1 11.2C32.3 111.8 41.6 121.6 64 121.6c17.1 0 27.7-8.5 32-25.6-6.4 8.5-13.9 10.7-22.4 6.4-4.8-2.5-8.2-6.1-13.1-11.2-7.5-7.8-16.8-17.6-39.2-17.6z"/></svg> },
+              { name: 'Supabase', icon: <svg className="w-8 h-8" viewBox="0 0 24 24"><path fill="#3ECF8E" d="M21.36 8.41a1.29 1.29 0 00-.73-1L12.56.24a1.26 1.26 0 00-1.12 0L3.37 7.42a1.29 1.29 0 00-.73 1v7.17a1.29 1.29 0 00.73 1l8.07 7.18a1.26 1.26 0 001.12 0l8.07-7.18a1.29 1.29 0 00.73-1V8.41zM11.37 20.91V12h-6.2a.66.66 0 01-.52-1.07l7.46-8.8a.64.64 0 011.08.49V12h6.2a.66.66 0 01.52 1.07l-7.46 8.8a.64.64 0 01-1.08-.49v-.47z"/></svg> },
+              { name: 'GSAP', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+            ].map((tech, i) => (
+              <FadeUp key={i} delay={i * 0.1}>
+                <div className="framework-card flex flex-col items-center justify-center p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-transparent hover:border-violet-500/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(139,92,246,0.3)] cursor-default">
+                  <div className="text-zinc-400 mb-4 transition-colors duration-300 group-hover:text-violet-500">{tech.icon}</div>
+                  <span className="text-sm font-bold text-zinc-800 dark:text-zinc-200">{tech.name}</span>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES - Background Image */}
+      <section id="services" className="py-24 relative bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/site-bg.jpg')", borderTop: '1px solid var(--border)' }}>
+        <div className="absolute inset-0 bg-white/95 dark:bg-zinc-950/90 z-0 pointer-events-none" />
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <FadeUp>
             <div className="text-center max-w-2xl mx-auto mb-16">
               <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'rgb(var(--accent-rgb))' }}>Our Core Capabilities</p>
@@ -454,9 +485,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PORTFOLIO - Crisp White */}
-      <section id="portfolio" className="py-24 bg-white dark:bg-zinc-950" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="max-w-6xl mx-auto px-6">
+      {/* PORTFOLIO - Dynamic */}
+      <section id="portfolio" className="py-24 bg-white dark:bg-zinc-950 relative" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <FadeUp>
             <div className="text-center max-w-2xl mx-auto mb-16">
               <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'rgb(var(--accent-rgb))' }}>Our Work</p>
@@ -464,25 +495,49 @@ export default function HomePage() {
               <p className="text-sm mt-3" style={{ color: 'var(--textGray)' }}>Every site we ship is built for speed, scalability, and a world-class user experience.</p>
             </div>
           </FadeUp>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {portfolio.map((p, i) => (
               <FadeUp key={i} delay={i * 0.06}>
-                <div className="portfolio-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-1" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
-                  <div className="aspect-[4/3] flex items-center justify-center" style={{ background: p.gradient }}>
-                    <svg className="w-16 h-16" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24" style={{ color: 'rgb(var(--accent-rgb))', opacity: 0.4 }}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                    </svg>
-                  </div>
-                  <div className="portfolio-overlay">
-                    <h4 className="text-white text-lg font-bold">{p.name}</h4>
-                    <p className="text-white/80 text-xs mb-2">{p.desc}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {p.tags.map((t, j) => (
-                        <span key={j} className="text-[10px] font-bold text-white px-2 py-1 rounded-md" style={{ background: 'rgba(255,255,255,0.15)' }}>{t}</span>
-                      ))}
+                <a href={p.link || '#'} target="_blank" rel="noopener noreferrer" className="block portfolio-card rounded-[2rem] overflow-hidden group transition-all duration-500 hover:-translate-y-2 relative" style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: '0 20px 40px -15px rgba(0,0,0,0.1)' }}>
+                  <div className="aspect-[4/3] sm:aspect-[16/9] relative bg-zinc-100 dark:bg-zinc-900 flex flex-col justify-between overflow-hidden">
+                    {p.image ? (
+                      <div className="absolute inset-0 bg-cover bg-top transition-transform duration-700 group-hover:scale-105" style={{ backgroundImage: `url('${p.image}')` }} />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center transition-transform duration-700 group-hover:scale-105" style={{ background: p.gradient }}>
+                         <svg className="w-16 h-16" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24" style={{ color: 'rgb(var(--accent-rgb))', opacity: 0.4 }}><path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
+                      </div>
+                    )}
+                    
+                    {/* Gradient Overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+                    
+                    {/* Top tags */}
+                    <div className="relative z-10 p-6 flex justify-end gap-2">
+                       {p.link && <span className="bg-white/90 backdrop-blur-md text-black text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg">Live Project</span>}
+                    </div>
+
+                    {/* Content Bottom */}
+                    <div className="relative z-10 p-6 sm:p-8 pt-12">
+                      <h4 className="text-white text-2xl sm:text-3xl font-extrabold mb-2 tracking-tight group-hover:text-violet-300 transition-colors">{p.name}</h4>
+                      <p className="text-white/90 text-sm mb-4 font-medium max-w-md leading-relaxed">{p.desc}</p>
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {p.tags.map((t, j) => (
+                          <span key={j} className="text-[11px] font-bold text-white px-3 py-1.5 rounded-full border border-white/20" style={{ background: 'rgba(0,0,0,0.4)' }}>{t}</span>
+                        ))}
+                      </div>
+                      
+                      {/* Review Snippet embedded in the card */}
+                      {p.review && (
+                        <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-xl p-4 text-white">
+                          <div className="flex items-center gap-1 mb-2">
+                             {Array.from({ length: 5 }).map((_, rIdx) => <svg key={rIdx} className="w-3.5 h-3.5 text-orange-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                          </div>
+                          <p className="text-xs font-medium italic text-white/90 leading-relaxed">"{p.review}"</p>
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
+                </a>
               </FadeUp>
             ))}
           </div>
@@ -490,8 +545,9 @@ export default function HomePage() {
       </section>
 
       {/* REVIEWS SECTION */}
-      <section id="reviews" className="py-24 bg-white dark:bg-zinc-950" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="max-w-6xl mx-auto px-6">
+      <section id="reviews" className="py-24 relative bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/site-bg-2.jpg')", borderTop: '1px solid var(--border)' }}>
+        <div className="absolute inset-0 bg-white/95 dark:bg-zinc-950/90 z-0 pointer-events-none" />
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <FadeUp>
             <div className="text-center max-w-2xl mx-auto mb-16">
               <p className="text-xs font-bold uppercase tracking-widest mb-2 text-orange-500">Wall of Reviews</p>

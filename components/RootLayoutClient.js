@@ -121,13 +121,13 @@ export default function RootLayoutClient({ children }) {
                     <p className="text-xs font-bold" style={{ color: 'var(--textLight)' }}>0758 335 592</p>
                   </div>
                 </a>
-                <a href="tel:0749610772" className="flex items-center gap-3 p-4 rounded-2xl transition-all hover:brightness-105" style={{ background: 'var(--grayDark)', border: '1px solid var(--border)' }}>
+                <a href="tel:0740610772" className="flex items-center gap-3 p-4 rounded-2xl transition-all hover:brightness-105" style={{ background: 'var(--grayDark)', border: '1px solid var(--border)' }}>
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-brand-accent-faint text-[rgb(var(--accent-rgb))]">
                     <Phone size={18} />
                   </div>
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--textGray)' }}>Call Sales</p>
-                    <p className="text-xs font-bold" style={{ color: 'var(--textLight)' }}>0749 610 772</p>
+                    <p className="text-xs font-bold" style={{ color: 'var(--textLight)' }}>0740 610 772</p>
                   </div>
                 </a>
                 <a href="https://wa.me/254758335592" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 rounded-2xl transition-all hover:brightness-105" style={{ background: 'var(--grayDark)', border: '1px solid var(--border)' }}>

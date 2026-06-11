@@ -38,7 +38,7 @@ export default function ChatBot() {
         setShowQuickReplies(lastRole === 'assistant')
       } catch {}
     } else {
-      const greeting = { role: 'assistant', text: "Hey! I'm the Cyzora assistant. Ask me anything about our services or pricing." }
+      const greeting = { role: 'assistant', text: "Hi there! I'm your Cyzora agent. I'd love to help you with web design, development, or anything else — just ask!" }
       setMessages([greeting])
       setShowQuickReplies(true)
     }
@@ -70,6 +70,14 @@ export default function ChatBot() {
   }, [messages])
 
   async function getAIResponse(text) {
+    if (text.toLowerCase().includes('how do i start') || text.toLowerCase().includes('how to start')) {
+      setWaiting(true)
+      await new Promise(r => setTimeout(r, 600))
+      setWaiting(false)
+      setShowQuickReplies(true)
+      return "It's super easy! We always begin with a quick 15-minute Zoom or phone call to understand your core feature set, design guidelines, and timeline. You can scroll down to the 'Schedule A Strategy Consultation' section to book your slot right now. Want me to help you pick a package?"
+    }
+
     setWaiting(true)
     setShowQuickReplies(false)
     try {
@@ -79,9 +87,9 @@ export default function ChatBot() {
         body: JSON.stringify({ message: text }),
       })
       const data = await res.json()
-      return data.reply || "I'll connect you with our team — email hi@cyzorastudio.com or call 0758 335 592."
+      return data.reply || "Let me connect you with our team — email hi@cyzorastudio.com or call 0740 610 772 and someone will get back to you right away."
     } catch {
-      return "I'll connect you with our team — email hi@cyzorastudio.com or call 0758 335 592."
+      return "Let me connect you with our team — email hi@cyzorastudio.com or call 0740 610 772 and someone will get back to you right away."
     } finally {
       setWaiting(false)
     }
@@ -144,15 +152,15 @@ export default function ChatBot() {
             <div className="h-14 border-b flex items-center px-4 shrink-0" style={{ borderColor: 'var(--border)' }}>
               <span className="w-2 h-2 rounded-full bg-primary pulse-dot mr-3" />
               <div className="flex-1">
-                <div className="font-body text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                <div className="font-body text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                   Cyzora Assistant
                 </div>
-                <div className="font-body text-xs" style={{ color: 'var(--muted)' }}>
+                <div className="font-body text-xs text-zinc-500 dark:text-zinc-400">
                   AI-powered · Ask me anything
                 </div>
               </div>
-              <button onClick={() => setOpen(false)} className="p-1">
-                <X size={18} style={{ color: 'var(--muted)' }} />
+              <button onClick={() => setOpen(false)} className="p-1 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
+                <X size={18} />
               </button>
             </div>
 
@@ -160,7 +168,7 @@ export default function ChatBot() {
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div
-                    className="font-body text-sm px-3.5 py-2.5 max-w-[80%] leading-relaxed"
+                    className={`font-body text-sm px-3.5 py-2.5 max-w-[80%] leading-relaxed ${msg.role !== 'user' ? 'text-zinc-900 dark:text-zinc-100' : ''}`}
                     style={
                       msg.role === 'user'
                         ? {
@@ -171,7 +179,6 @@ export default function ChatBot() {
                         : {
                             background: 'var(--card)',
                             border: '1px solid var(--border)',
-                            color: 'var(--text)',
                             borderRadius: '0 12px 12px 12px',
                           }
                     }
@@ -200,11 +207,10 @@ export default function ChatBot() {
                     <button
                       key={reply}
                       onClick={() => handleQuickReply(reply)}
-                      className="font-body text-xs px-3 py-1.5 rounded-lg transition-colors duration-200"
+                      className="font-body text-xs px-3 py-1.5 rounded-lg transition-colors duration-200 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                       style={{
                         background: 'var(--card)',
                         border: '1px solid var(--border)',
-                        color: 'var(--text)',
                       }}
                     >
                       {reply}
@@ -222,8 +228,7 @@ export default function ChatBot() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Ask about services, pricing..."
-                className="flex-1 font-body text-sm bg-transparent border-none outline-none"
-                style={{ color: 'var(--text)' }}
+                className="flex-1 font-body text-sm bg-transparent border-none outline-none text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500"
                 disabled={waiting}
               />
               <button
