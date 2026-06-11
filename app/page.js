@@ -370,8 +370,12 @@ export default function HomePage() {
               <p className="text-sm mt-3" style={{ color: 'var(--textGray)' }}>We leverage industry-leading frameworks to deliver fast, secure, and highly scalable digital experiences.</p>
             </div>
           </FadeUp>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {[
+          <FadeUp>
+            <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] mt-8">
+              <div className="flex animate-infinite-scroll w-max gap-6 hover:[animation-play-state:paused] group">
+                {[...Array(2)].map((_, arrayIndex) => (
+                  <div key={arrayIndex} className="flex gap-6">
+                    {[
               { name: 'Next.js', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64s28.7 64 64 64c11.2 0 21.7-2.9 30.8-7.9L48.4 55.3v36.6h-6.8V41.8h6.8l50.5 75.8C116.4 106.2 128 86.5 128 64c0-35.3-28.7-64-64-64zm22.1 84.6l-7.4-11.2v-31.5h6.8v42.7h.6z"/></svg> },
               { name: 'React', icon: <svg className="w-8 h-8" viewBox="-11.5 -10.23174 23 20.46348"><circle cx="0" cy="0" r="2.05" fill="#61dafb"/><g stroke="#61dafb" strokeWidth="1" fill="none"><ellipse rx="11" ry="4.2"/><ellipse rx="11" ry="4.2" transform="rotate(60)"/><ellipse rx="11" ry="4.2" transform="rotate(120)"/></g></svg> },
               { name: 'Tailwind CSS', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="#06B6D4" d="M64 25.6c-17.1 0-27.7 8.5-32 25.6 6.4-8.5 13.9-10.7 22.4-6.4 4.8 2.5 8.2 6.1 13.1 11.2C75 63.8 84.3 73.6 106.7 73.6c17.1 0 27.7-8.5 32-25.6-6.4 8.5-13.9 10.7-22.4 6.4-4.8-2.5-8.2-6.1-13.1-11.2-7.5-7.8-16.8-17.6-39.2-17.6zm-42.7 48c-17.1 0-27.7 8.5-32 25.6 6.4-8.5 13.9-10.7 22.4-6.4 4.8 2.5 8.2 6.1 13.1 11.2C32.3 111.8 41.6 121.6 64 121.6c17.1 0 27.7-8.5 32-25.6-6.4 8.5-13.9 10.7-22.4 6.4-4.8-2.5-8.2-6.1-13.1-11.2-7.5-7.8-16.8-17.6-39.2-17.6z"/></svg> },
@@ -397,11 +401,44 @@ export default function HomePage() {
               { name: 'Figma', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"></path><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"></path><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"></path><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"></path><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"></path></svg> },
               { name: 'VS Code', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg> },
               { name: 'Vercel', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L24 22H0L12 2Z"/></svg> }
-            ].map((tech, i) => (
+                    ].map((tech, i) => (
+                      <div key={`${arrayIndex}-${i}`} className="framework-card w-40 flex-shrink-0 flex flex-col items-center justify-center p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-transparent hover:border-violet-500/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(139,92,246,0.3)] cursor-default">
+                        <div className="text-zinc-400 mb-4 transition-colors duration-300 group-hover:text-violet-500">{tech.icon}</div>
+                        <span className="text-sm font-bold text-zinc-800 dark:text-zinc-200">{tech.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* OUR PROCESS - How We Work */}
+      <section id="process" className="py-24 bg-white dark:bg-zinc-950" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="max-w-5xl mx-auto px-6">
+          <FadeUp>
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'rgb(var(--accent-rgb))' }}>How We Work</p>
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight" style={{ color: 'var(--textLight)' }}>Our Engineering Process</h2>
+              <p className="text-sm mt-3" style={{ color: 'var(--textGray)' }}>A transparent, step-by-step roadmap from initial discovery to successful deployment.</p>
+            </div>
+          </FadeUp>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+            {/* Connecting line */}
+            <div className="hidden md:block absolute top-12 left-0 w-full h-[2px] bg-zinc-100 dark:bg-zinc-900 z-0"></div>
+            {[
+              { step: '01', title: 'Discovery & Strategy', desc: 'We deep-dive into your business goals, target audience, and functional requirements.' },
+              { step: '02', title: 'Architecture & Design', desc: 'We build UI/UX prototypes and map out the data architecture and cloud infrastructure.' },
+              { step: '03', title: 'Development & Engineering', desc: 'Writing clean, scalable code utilizing the modern stack to bring the designs to life.' },
+              { step: '04', title: 'Launch & Scale', desc: 'Performance optimization, SEO setup, final deployment, and handover.' }
+            ].map((p, i) => (
               <FadeUp key={i} delay={i * 0.1}>
-                <div className="framework-card flex flex-col items-center justify-center p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-transparent hover:border-violet-500/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(139,92,246,0.3)] cursor-default">
-                  <div className="text-zinc-400 mb-4 transition-colors duration-300 group-hover:text-violet-500">{tech.icon}</div>
-                  <span className="text-sm font-bold text-zinc-800 dark:text-zinc-200">{tech.name}</span>
+                <div className="relative z-10 bg-white dark:bg-zinc-950 mt-4 md:mt-0">
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center font-black text-xl mb-6 shadow-xl mx-auto md:mx-0" style={{ background: 'var(--card)', color: 'rgb(var(--accent-rgb))', border: '1px solid var(--border)' }}>{p.step}</div>
+                  <h3 className="text-lg font-bold mb-3 text-center md:text-left" style={{ color: 'var(--textLight)' }}>{p.title}</h3>
+                  <p className="text-sm leading-relaxed text-center md:text-left" style={{ color: 'var(--textGray)' }}>{p.desc}</p>
                 </div>
               </FadeUp>
             ))}
