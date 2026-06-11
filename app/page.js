@@ -296,11 +296,9 @@ export default function HomePage() {
 
         <section className="max-w-6xl mx-auto px-6 pt-32 pb-24 w-full relative z-10">
           <div className="hero-content">
-            <div ref={heroBadgeRef} style={{ opacity: 0 }}>
-              <span className="hero-badge mb-6 bg-white/10 text-white border-white/20">
-                <span className="hero-badge-dot bg-white"></span>
-                Premium Web Development Agency
-              </span>
+            <div ref={heroBadgeRef} style={{ opacity: 0 }} className="flex items-center gap-4 mb-8">
+              <div className="h-[2px] w-10 bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.6)]"></div>
+              <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-violet-200">Premium Web Development Agency</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] mb-8 text-white">
@@ -379,6 +377,26 @@ export default function HomePage() {
               { name: 'Tailwind CSS', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="#06B6D4" d="M64 25.6c-17.1 0-27.7 8.5-32 25.6 6.4-8.5 13.9-10.7 22.4-6.4 4.8 2.5 8.2 6.1 13.1 11.2C75 63.8 84.3 73.6 106.7 73.6c17.1 0 27.7-8.5 32-25.6-6.4 8.5-13.9 10.7-22.4 6.4-4.8-2.5-8.2-6.1-13.1-11.2-7.5-7.8-16.8-17.6-39.2-17.6zm-42.7 48c-17.1 0-27.7 8.5-32 25.6 6.4-8.5 13.9-10.7 22.4-6.4 4.8 2.5 8.2 6.1 13.1 11.2C32.3 111.8 41.6 121.6 64 121.6c17.1 0 27.7-8.5 32-25.6-6.4 8.5-13.9 10.7-22.4 6.4-4.8-2.5-8.2-6.1-13.1-11.2-7.5-7.8-16.8-17.6-39.2-17.6z"/></svg> },
               { name: 'Supabase', icon: <svg className="w-8 h-8" viewBox="0 0 24 24"><path fill="#3ECF8E" d="M21.36 8.41a1.29 1.29 0 00-.73-1L12.56.24a1.26 1.26 0 00-1.12 0L3.37 7.42a1.29 1.29 0 00-.73 1v7.17a1.29 1.29 0 00.73 1l8.07 7.18a1.26 1.26 0 001.12 0l8.07-7.18a1.29 1.29 0 00.73-1V8.41zM11.37 20.91V12h-6.2a.66.66 0 01-.52-1.07l7.46-8.8a.64.64 0 011.08.49V12h6.2a.66.66 0 01.52 1.07l-7.46 8.8a.64.64 0 01-1.08-.49v-.47z"/></svg> },
               { name: 'GSAP', icon: <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> },
+              { name: 'Firebase', icon: <svg className="w-8 h-8" viewBox="0 0 128 128" fill="none"><path d="M125.7 75.3a2.3 2.3 0 0 0-2-1l-24.6-13-16.8 17.6-9.5-9.3L48.2 92.5l75.6 42z" fill="#FFA000"/><path d="M51.8 45.4a2.2 2.2 0 0 0-4.1-.3L2.3 92.5l71.5 42z" fill="#F57C00"/><path d="M127.3 115.5l-20.7-98c-.4-1.9-2.7-2.3-3.6-.6L82.1 57.6l21.6 21.3 23.6 36.6z" fill="#FFCA28"/><path d="M48.4 49l22.2-43.4c1-1.9 3.8-1.9 4.8 0L92 37l-43.6 12z" fill="#FFE082"/></svg> },
+              { name: 'JavaScript', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="#F7DF1E" d="M0 0h128v128H0z"/><path d="M43.7 96c-5.2-3.1-8-8.2-8.4-15h11c.3 3.9 1.8 6.5 4.6 6.5 2.5 0 4.1-1.3 4.1-3.2 0-2.3-2-3.2-6.5-5.2-7.5-3.3-11.8-7.3-11.8-14.7 0-7.8 5.6-13 14.8-13 8.3 0 13.9 4.9 14.7 12.8h-10.7c-.5-3.3-2.1-5-4-5-2.2 0-3.6 1.3-3.6 3 0 2 1.4 2.8 5.7 4.7 8.3 3.6 12.6 7.6 12.6 15 0 8.5-6.3 13.6-15.5 13.6-9 0-15-5.1-17-14.5zm55.3.6c-11.3 0-18.7-7.2-18.7-21.7V52.8h11.4v22c0 8.3 3.3 12.3 8.4 12.3 5 0 8.2-4.1 8.2-12.3v-22h11.4v22.1c0 14.5-7.5 21.7-18.7 21.7z"/></svg> },
+              { name: 'HTML5', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="#E34F26" d="M11.9 10L21 112.5l42.6 11.9L106.5 112.5 116.1 10z"/><path fill="#F06529" d="M63.5 115.1l34.4-9.6L105.7 19H63.5z"/><path fill="#EBEBEB" d="M63.5 49H42.5L41.3 35H63.5V21H26l3.4 38.3h34.1zM63.5 83.1h-.1l-16.1-4.3-.9-11H32.2l2.3 22.8 29 8h.1z"/><path fill="#FFF" d="M63.5 83.1V98.6L92.2 90.5l-.2-2.3-1.6-18.2H63.5V59h33l.4-4.8L98 44H63.5v-9h35.8l.2-2.5 1.2-11.5H63.5v14z"/></svg> },
+              { name: 'CSS3', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="#1572B6" d="M12.1 10.3l9 101.4 42.4 11.8 42.8-11.8 8.8-101.4z"/><path fill="#33A9DC" d="M63.6 114.7l34-9.4L104.9 19H63.6z"/><path fill="#FFF" d="M63.6 48.7h21l-1.3 14H63.6v14h18.2l-1.6 17.8L63.6 99v14.4l28.6-7.8.2-2.3 2.7-30.8H63.6zM63.6 48.7V34.6H26.3L25.1 20.3l-1.2-14.3h39.7v14.3zM30.4 76.7H45l1.1 11 17.5 4.8V107l-28.7-7.9z"/></svg> },
+              { name: 'Python', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="#3776AB" d="M63.7 3.3c-29.6 0-27.9 12.8-27.9 12.8l.1 13.3h28.6v4h-39s-18.6-2.1-18.6 27.2c0 29.3 16.3 28.5 16.3 28.5h9.5v-13.6s-.2-15.6 15.3-15.6h30s14.8.1 14.8-14.5V20.1s1.3-16.8-29.1-16.8zM45 13.2c2.6 0 4.8 2.2 4.8 4.8S47.6 22.8 45 22.8 40.2 20.6 40.2 18s2.2-4.8 4.8-4.8z"/><path fill="#FFD43B" d="M64.6 124.7c29.6 0 27.9-12.8 27.9-12.8l-.1-13.3H63.8v-4h39s18.6 2.1 18.6-27.2c0-29.3-16.3-28.5-16.3-28.5h-9.5v13.6s.2 15.6-15.3 15.6h-30s-14.8-.1-14.8 14.5v25.3s-1.3 16.8 29.1 16.8zm18.7-9.9c-2.6 0-4.8-2.2-4.8-4.8s2.2-4.8 4.8-4.8 4.8 2.2 4.8 4.8-2.2 4.8-4.8 4.8z"/></svg> },
+              { name: 'C++', icon: <svg className="w-8 h-8" viewBox="0 0 128 128"><path fill="#00599C" d="M116.5 35.8l-47.5-27c-3-1.7-6.8-1.7-9.8 0l-47.6 27C8.6 37.5 6.7 40.8 6.7 44.2v54c0 3.4 1.9 6.7 4.9 8.4l47.6 27c3 1.7 6.8 1.7 9.8 0l47.5-27c3-1.7 4.9-5 4.9-8.4v-54c0-3.4-1.9-6.7-4.9-8.4zM53.4 86c-13.8 0-25-11.2-25-25s11.2-25 25-25c6.6 0 12.6 2.5 17.1 6.7l-8.2 8.2c-2.4-2.2-5.4-3.5-8.9-3.5-7.4 0-13.5 6.1-13.5 13.5s6.1 13.5 13.5 13.5c3.5 0 6.5-1.3 8.9-3.5l8.2 8.2c-4.5 4.2-10.5 6.7-17.1 6.7zm28.8-10.5v-8.2h-8.2v-6.6h8.2v-8.2h6.6v8.2h8.2v6.6h-8.2v8.2h-6.6zm23.2 0v-8.2h-8.2v-6.6h8.2v-8.2h6.6v8.2h8.2v6.6h-8.2v8.2h-6.6z"/></svg> },
+              { name: 'Node.js', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg> },
+              { name: 'TypeScript', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M10 12v6"></path><path d="M8 12h4"></path><path d="M16 16.5c-1-1-3-1-3-2s2-1 2-2"></path></svg> },
+              { name: 'Docker', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> },
+              { name: 'Kubernetes', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon><line x1="12" y1="22" x2="12" y2="15.5"></line><polyline points="22 8.5 12 15.5 2 8.5"></polyline><polyline points="2 15.5 12 8.5 22 15.5"></polyline><line x1="12" y1="2" x2="12" y2="8.5"></line></svg> },
+              { name: 'AWS', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.5 19H9a7 7 0 116.71-9h1.79a4.5 4.5 0 110 9Z"></path></svg> },
+              { name: 'Google Cloud', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.5 19H9a7 7 0 116.71-9h1.79a4.5 4.5 0 110 9Z"></path></svg> },
+              { name: 'PostgreSQL', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg> },
+              { name: 'MongoDB', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg> },
+              { name: 'GraphQL', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon></svg> },
+              { name: 'Git', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 6a3 3 0 11-6 0 3 3 0 016 0zM15 18a3 3 0 11-6 0 3 3 0 016 0zM6 18a3 3 0 11-6 0 3 3 0 016 0zM12 9v6M9 18l3-3"/></svg> },
+              { name: 'GitHub', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg> },
+              { name: 'Figma', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"></path><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"></path><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"></path><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"></path><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"></path></svg> },
+              { name: 'VS Code', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg> },
+              { name: 'Vercel', icon: <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L24 22H0L12 2Z"/></svg> }
             ].map((tech, i) => (
               <FadeUp key={i} delay={i * 0.1}>
                 <div className="framework-card flex flex-col items-center justify-center p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-transparent hover:border-violet-500/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(139,92,246,0.3)] cursor-default">
@@ -509,17 +527,22 @@ export default function HomePage() {
                     )}
                     
                     {/* Gradient Overlay for text readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/20 opacity-95 transition-opacity duration-300 group-hover:opacity-100" />
                     
                     {/* Top tags */}
-                    <div className="relative z-10 p-6 flex justify-end gap-2">
-                       {p.link && <span className="bg-white/90 backdrop-blur-md text-black text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg">Live Project</span>}
+                    <div className="relative z-10 p-6 flex justify-end">
+                       {p.link && (
+                         <div className="flex items-center gap-2 group/live">
+                           <span className="text-[10px] font-black uppercase tracking-[0.15em] text-white drop-shadow-md transition-colors group-hover/live:text-violet-300">Live Project</span>
+                           <svg className="w-3.5 h-3.5 text-white drop-shadow-md transition-colors group-hover/live:text-violet-300" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg>
+                         </div>
+                       )}
                     </div>
 
                     {/* Content Bottom */}
                     <div className="relative z-10 p-6 sm:p-8 pt-12">
-                      <h4 className="text-white text-2xl sm:text-3xl font-extrabold mb-2 tracking-tight group-hover:text-violet-300 transition-colors">{p.name}</h4>
-                      <p className="text-white/90 text-sm mb-4 font-medium max-w-md leading-relaxed">{p.desc}</p>
+                      <h4 className="text-white text-2xl sm:text-3xl font-extrabold mb-2 tracking-tight group-hover:text-violet-300 transition-colors drop-shadow-md">{p.name}</h4>
+                      <p className="text-white/95 text-sm mb-4 font-medium max-w-md leading-relaxed drop-shadow">{p.desc}</p>
                       <div className="flex flex-wrap gap-2 mb-6">
                         {p.tags.map((t, j) => (
                           <span key={j} className="text-[11px] font-bold text-white px-3 py-1.5 rounded-full border border-white/20" style={{ background: 'rgba(0,0,0,0.4)' }}>{t}</span>
@@ -668,7 +691,7 @@ export default function HomePage() {
                   boxShadow: plan.popular ? '0 20px 60px color-mix(in srgb, var(--gold) 8%, transparent)' : 'none'
                 }}>
                   {plan.popular && (
-                    <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 text-black text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full" style={{ background: 'var(--gold)' }}>Most Popular</div>
+                    <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 text-black text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 shadow-xl" style={{ background: 'var(--gold)' }}>Most Popular</div>
                   )}
                   <div className="space-y-6">
                     <div>
@@ -850,8 +873,9 @@ export default function HomePage() {
       </section>
 
       {/* FAQ - Crisp White */}
-      <section id="faq" className="py-24 bg-white dark:bg-zinc-950" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="max-w-3xl mx-auto px-6">
+      <section id="faq" className="py-24 relative bg-cover bg-center" style={{ backgroundImage: "url('/faq-bg.png')", borderTop: '1px solid var(--border)' }}>
+        <div className="absolute inset-0 bg-white/80 dark:bg-zinc-950/85 z-0" />
+        <div className="max-w-3xl mx-auto px-6 relative z-10">
           <FadeUp>
             <div className="text-center max-w-xl mx-auto mb-14">
               <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'rgb(var(--accent-rgb))' }}>Frequently Asked Questions</p>
@@ -897,8 +921,9 @@ export default function HomePage() {
       </section>
 
       {/* BOOKING SCHEDULER */}
-      <section id="booking" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="max-w-4xl mx-auto px-6 py-24 relative">
+      <section id="booking" className="relative bg-cover bg-center" style={{ backgroundImage: "url('/booking-bg.png')", borderTop: '1px solid var(--border)' }}>
+        <div className="absolute inset-0 bg-white/80 dark:bg-zinc-950/85 z-0 pointer-events-none" />
+        <div className="max-w-4xl mx-auto px-6 py-24 relative z-10">
           <div style={{ position: 'absolute', top: '50%', left: 0, width: 300, height: 300, borderRadius: '50%', filter: 'blur(90px)', pointerEvents: 'none', background: 'var(--glow)' }}></div>
 
           <FadeUp>
