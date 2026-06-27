@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase-server'
 import { sendBookingNotification } from '@/lib/email'
+import { rateLimit } from '@/lib/rate-limit'
+
+const limiter = rateLimit({ interval: 60000, max: 5 })
 
 export async function GET() {
   const supabase = await createClient()
@@ -14,6 +17,11 @@ export async function GET() {
 }
 
 export async function POST(request) {
+  const { allowed, retryAfter } = limiter(request)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429, headers: { 'Retry-After': String(retryAfter) } })
+  }
+
   const supabase = await createClient()
   const body = await request.json()
 

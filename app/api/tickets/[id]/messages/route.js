@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase-server'
+import { rateLimit } from '@/lib/rate-limit'
+
+const limiter = rateLimit({ interval: 60000, max: 10 })
 
 export async function GET(request, { params }) {
   const supabase = await createClient()
@@ -16,6 +19,11 @@ export async function GET(request, { params }) {
 }
 
 export async function POST(request, { params }) {
+  const { allowed, retryAfter } = limiter(request)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429, headers: { 'Retry-After': String(retryAfter) } })
+  }
+
   const supabase = await createClient()
   const { id } = params
   const body = await request.json()

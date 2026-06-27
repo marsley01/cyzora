@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase-server'
+import { rateLimit } from '@/lib/rate-limit'
+
+const limiter = rateLimit({ interval: 60000, max: 30 })
+const postLimiter = rateLimit({ interval: 60000, max: 10 })
 
 export async function GET(request) {
+  const { allowed, retryAfter } = limiter(request)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429, headers: { 'Retry-After': String(retryAfter) } })
+  }
+
   const supabase = await createClient()
   const { searchParams } = new URL(request.url)
   const sessionId = searchParams.get('session')
@@ -21,6 +30,11 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  const { allowed, retryAfter } = postLimiter(request)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429, headers: { 'Retry-After': String(retryAfter) } })
+  }
+
   const supabase = await createClient()
   const body = await request.json()
 

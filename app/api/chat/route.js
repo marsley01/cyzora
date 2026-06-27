@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server'
+import { rateLimit } from '@/lib/rate-limit'
+
+const limiter = rateLimit({ interval: 60000, max: 20 })
 
 const SYSTEM_PROMPT = `You are a friendly, real human agent working for Cyzora Design, a Nairobi-based web design and development agency. You are warm, positive, and helpful — like a knowledgeable team member who genuinely wants to guide the visitor.
 
@@ -23,10 +26,10 @@ const GEMINI_MODELS = [
 ]
 
 async function callGemini(model, contents) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`
   const res = await fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': GEMINI_API_KEY },
     body: JSON.stringify({
       contents: [
         { role: 'user', parts: [{ text: SYSTEM_PROMPT + '\n\n' + contents }] },
@@ -42,6 +45,11 @@ async function callGemini(model, contents) {
 }
 
 export async function POST(request) {
+  const { allowed, retryAfter } = limiter(request)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429, headers: { 'Retry-After': String(retryAfter) } })
+  }
+
   const { message } = await request.json()
 
   if (!message?.trim()) {
